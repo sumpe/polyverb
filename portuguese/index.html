@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Portuguese verb drill</title>
+<title>Peter’s Portuguese Verb Drill 🍪</title>
 <style>
 :root{
   --bg:#f3f6fb;--card:#ffffff;--text:#16202e;--muted:#5d6b7e;--line:#d3dbe8;
@@ -35,7 +35,10 @@ h1{font:600 1.7rem/1.2 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,se
 .seg{display:flex;gap:8px;margin-bottom:22px}
 .seg button{flex:1;padding:12px;border:1px solid var(--line);background:transparent;color:var(--text);border-radius:10px;font:inherit;font-size:1.1rem;cursor:pointer}
 .seg button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-text)}
-.switch{display:flex;align-items:center;gap:12px;margin-bottom:26px;cursor:pointer;position:relative}
+.seg.tight{margin-bottom:8px}
+.hint{color:var(--muted);font-size:.85rem;margin:0 0 22px}
+.switch{display:flex;align-items:center;gap:12px;margin-bottom:16px;cursor:pointer;position:relative}
+#start{margin-top:10px}
 .switch input{position:absolute;opacity:0;width:44px;height:26px;margin:0;cursor:pointer}
 .track{width:44px;height:26px;border-radius:13px;background:var(--line);position:relative;flex:none;transition:background .15s}
 .track::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
@@ -69,20 +72,32 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </head>
 <body>
 <main>
-  <h1>Portuguese verb drill</h1>
+  <h1>Peter’s Portuguese Verb Drill 🍪</h1>
   <p class="sub">European Portuguese. Type the form; accents count.</p>
 
   <section id="setup" class="card">
     <span class="lbl">Number of forms</span>
     <div class="seg" id="seg">
-      <button data-n="10" aria-pressed="false">10</button>
-      <button data-n="20" class="on" aria-pressed="true">20</button>
-      <button data-n="30" aria-pressed="false">30</button>
+      <button data-v="10" aria-pressed="false">10</button>
+      <button data-v="20" class="on" aria-pressed="true">20</button>
+      <button data-v="30" aria-pressed="false">30</button>
     </div>
+    <span class="lbl">Verbs</span>
+    <div class="seg tight" id="kind">
+      <button data-v="both" class="on" aria-pressed="true">Both</button>
+      <button data-v="regular" aria-pressed="false">Regular</button>
+      <button data-v="irregular" aria-pressed="false">Irregular</button>
+    </div>
+    <p class="hint">Regular: cantar, comer, abrir. Irregular: ser, estar, ter, haver.</p>
     <label class="switch">
       <input type="checkbox" id="vos" checked>
       <span class="track"></span>
       <span>Include <i>vós</i> forms (2pl)</span>
+    </label>
+    <label class="switch">
+      <input type="checkbox" id="syn">
+      <span class="track"></span>
+      <span>Synthetic forms only (no future or conditional)</span>
     </label>
     <button class="primary" id="start">Start</button>
   </section>
@@ -123,24 +138,37 @@ haver:["hei hás há havemos/hemos haveis/heis hão","houve houveste houve houve
 
 const $=id=>document.getElementById(id);
 const norm=s=>s.trim().toLowerCase().normalize("NFC").replace(/\s+/g," ");
-let n=20,q=[],i=0,score=0,miss=[],phase="";
+const REG=["cantar","comer","abrir"];
+let n=20,kind="both",q=[],i=0,score=0,miss=[],phase="";
 
 function show(id){["setup","quiz","done"].forEach(s=>$(s).hidden=s!==id)}
 
-document.querySelectorAll("#seg button").forEach(b=>b.onclick=()=>{
-  n=+b.dataset.n;
-  document.querySelectorAll("#seg button").forEach(x=>{
-    x.classList.toggle("on",x===b);
-    x.setAttribute("aria-pressed",String(x===b));
+function seg(id,fn){
+  const bs=document.querySelectorAll("#"+id+" button");
+  bs.forEach(b=>b.onclick=()=>{
+    fn(b.dataset.v);
+    bs.forEach(x=>{
+      x.classList.toggle("on",x===b);
+      x.setAttribute("aria-pressed",String(x===b));
+    });
   });
-});
+}
+seg("seg",v=>{n=+v;});
+seg("kind",v=>{kind=v;});
 
 function start(){
-  const vos=$("vos").checked,pool=[];
-  for(const v in D)D[v].forEach((s,t)=>s.split(" ").forEach((f,p)=>{
-    if(p===4&&!vos)return;
-    pool.push({v,t,p,a:f.split("/")});
-  }));
+  const vos=$("vos").checked,syn=$("syn").checked,pool=[];
+  for(const v in D){
+    if(kind==="regular"&&!REG.includes(v))continue;
+    if(kind==="irregular"&&REG.includes(v))continue;
+    D[v].forEach((s,t)=>{
+      if(syn&&(t===4||t===5))return;
+      s.split(" ").forEach((f,p)=>{
+        if(p===4&&!vos)return;
+        pool.push({v,t,p,a:f.split("/")});
+      });
+    });
+  }
   for(let k=pool.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[pool[k],pool[j]]=[pool[j],pool[k]];}
   q=pool.slice(0,n);i=0;score=0;miss=[];
   show("quiz");render();
