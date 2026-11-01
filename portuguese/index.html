@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Peter’s Portuguese Verb Drill 🍪</title>
 <style>
 :root{
-  --bg:#f3f6fb;--card:#ffffff;--text:#16202e;--muted:#5d6b7e;--line:#d3dbe8;
-  --accent:#1f4e9c;--accent-text:#ffffff;--ok:#1b7a47;--okbg:#e1f3e8;--bad:#b3261e;--badbg:#fbe9e7;
+  --bg:#f3f7f4;--card:#ffffff;--text:#14231a;--muted:#587061;--line:#d1ddd4;
+  --accent:#046a38;--accent-text:#ffffff;--red:#c8281b;--ok:#046a38;--okbg:#e1f3e8;--bad:#c8281b;--badbg:#fdeae8;
   color-scheme:light;box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#10151d;--card:#1a212c;--text:#e8edf4;--muted:#9aa7b8;--line:#2f3a49;
-    --accent:#6fa2ec;--accent-text:#0b1524;--ok:#6fd19a;--okbg:#163625;--bad:#f2a29b;--badbg:#3b1f1d;
+    --bg:#0f1712;--card:#18221b;--text:#e8f0ea;--muted:#9bb0a2;--line:#2c3b31;
+    --accent:#3fb37a;--accent-text:#04170d;--red:#ff7a6e;--ok:#6fd19a;--okbg:#153324;--bad:#ff8a7f;--badbg:#3e1f1c;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#10151d;--card:#1a212c;--text:#e8edf4;--muted:#9aa7b8;--line:#2f3a49;
-  --accent:#6fa2ec;--accent-text:#0b1524;--ok:#6fd19a;--okbg:#163625;--bad:#f2a29b;--badbg:#3b1f1d;
+  --bg:#0f1712;--card:#18221b;--text:#e8f0ea;--muted:#9bb0a2;--line:#2c3b31;
+  --accent:#3fb37a;--accent-text:#04170d;--red:#ff7a6e;--ok:#6fd19a;--okbg:#153324;--bad:#ff8a7f;--badbg:#3e1f1c;
   color-scheme:dark;
 }
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -30,6 +30,8 @@ body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:16px/1
 main{max-width:520px;margin:0 auto;padding:28px 16px 48px}
 h1{font:600 1.7rem/1.2 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;margin:0 0 4px}
 .sub{color:var(--muted);margin:0 0 22px;font-size:.95rem}
+.flag{position:relative;height:12px;border-radius:6px;margin-bottom:20px;background:linear-gradient(90deg,#046a38 40%,#da291c 40%)}
+.flag::after{content:"";position:absolute;left:40%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#ffe000;border:4px solid var(--bg)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 20px}
 .lbl{display:block;font-weight:600;margin-bottom:8px}
 .seg{display:flex;gap:8px;margin-bottom:22px}
@@ -53,13 +55,13 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:26px}
 #fill{height:100%;width:0;background:var(--accent);transition:width .25s}
 .verb{font:600 3rem/1.1 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;text-align:center}
-.tense{display:table;margin:10px auto 0;padding:4px 14px;border:1px solid var(--accent);border-radius:999px;color:var(--accent);font-weight:600}
+.tense{display:table;margin:10px auto 0;padding:4px 14px;border:1px solid var(--red);border-radius:999px;color:var(--red);font-weight:600}
 .who{text-align:center;color:var(--muted);margin:8px 0 22px;font-size:1.05rem}
 #ans{width:100%;padding:14px;font:inherit;font-size:1.3rem;text-align:center;border:2px solid var(--line);border-radius:10px;background:transparent;color:var(--text)}
 #ans:focus{outline:none;border-color:var(--accent)}
 #ans.ok{border-color:var(--ok);background:var(--okbg)}
 #ans.bad{border-color:var(--bad);background:var(--badbg)}
-.fb{margin:12px 0 0;padding:10px 12px;border-radius:8px;text-align:center;font-weight:600}
+.fb{margin:12px 0 0;padding:10px 12px;border-radius:8px;text-align:center;font-weight:600;white-space:pre-line}
 .fb.ok{background:var(--okbg);color:var(--ok)}
 .fb.bad{background:var(--badbg);color:var(--bad)}
 #go{margin-top:16px}
@@ -72,34 +74,35 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </head>
 <body>
 <main>
+  <div class="flag" aria-hidden="true"></div>
   <h1>Peter’s Portuguese Verb Drill 🍪</h1>
-  <p class="sub">European Portuguese. Type the form; accents count.</p>
+  <p class="sub">Português europeu. Escreve a forma verbal; os acentos contam.</p>
 
   <section id="setup" class="card">
-    <span class="lbl">Number of forms</span>
+    <span class="lbl">Número de formas</span>
     <div class="seg" id="seg">
       <button data-v="10" aria-pressed="false">10</button>
       <button data-v="20" class="on" aria-pressed="true">20</button>
       <button data-v="30" aria-pressed="false">30</button>
     </div>
-    <span class="lbl">Verbs</span>
+    <span class="lbl">Verbos</span>
     <div class="seg tight" id="kind">
-      <button data-v="both" class="on" aria-pressed="true">Both</button>
-      <button data-v="regular" aria-pressed="false">Regular</button>
-      <button data-v="irregular" aria-pressed="false">Irregular</button>
+      <button data-v="both" class="on" aria-pressed="true">Todos</button>
+      <button data-v="regular" aria-pressed="false">Regulares</button>
+      <button data-v="irregular" aria-pressed="false">Irregulares</button>
     </div>
-    <p class="hint">Regular: cantar, comer, abrir. Irregular: ser, estar, ter, haver.</p>
+    <p class="hint">Regulares: cantar, comer, abrir. Irregulares: ser, estar, ter, haver.</p>
     <label class="switch">
       <input type="checkbox" id="vos" checked>
       <span class="track"></span>
-      <span>Include <i>vós</i> forms (2pl)</span>
+      <span>Incluir formas de <i>vós</i> (2.ª pl.)</span>
     </label>
     <label class="switch">
       <input type="checkbox" id="syn">
       <span class="track"></span>
-      <span>Synthetic forms only (no future or conditional)</span>
+      <span>Só formas sintéticas (sem futuro nem condicional)</span>
     </label>
-    <button class="primary" id="start">Start</button>
+    <button class="primary" id="start">Começar</button>
   </section>
 
   <section id="quiz" class="card" hidden>
@@ -108,24 +111,24 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     <div class="verb" id="verb"></div>
     <div class="tense" id="tense"></div>
     <div class="who" id="who"></div>
-    <input id="ans" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Your answer">
+    <input id="ans" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="A tua resposta">
     <div id="fb" class="fb" hidden></div>
-    <button class="primary" id="go">Check</button>
+    <button class="primary" id="go">Verificar</button>
   </section>
 
   <section id="done" class="card" hidden>
     <div id="res"></div>
     <div id="pct"></div>
-    <p id="misshead">Review these</p>
+    <p id="misshead">Para rever</p>
     <ul id="miss"></ul>
-    <button class="primary" id="again">Play again</button>
-    <button class="ghost" id="change">Change settings</button>
+    <button class="primary" id="again">Jogar outra vez</button>
+    <button class="ghost" id="change">Alterar opções</button>
   </section>
 </main>
 
 <script>
-const T=["Present","Preterite","Imperfect","Pluperfect (synthetic)","Future","Conditional","Present subjunctive","Imperfect subjunctive"];
-const P=[["eu","1sg"],["tu","2sg"],["ele / ela","3sg"],["nós","1pl"],["vós","2pl"],["eles / elas","3pl"]];
+const T=["Presente do indicativo","Pretérito perfeito","Pretérito imperfeito","Mais-que-perfeito simples","Futuro","Condicional","Presente do conjuntivo","Pretérito imperfeito do conjuntivo"];
+const P=[["eu","1.ª sing."],["tu","2.ª sing."],["ele / ela","3.ª sing."],["nós","1.ª pl."],["vós","2.ª pl."],["eles / elas","3.ª pl."]];
 const D={
 cantar:["canto cantas canta cantamos cantais cantam","cantei cantaste cantou cantámos/cantamos cantastes cantaram","cantava cantavas cantava cantávamos cantáveis cantavam","cantara cantaras cantara cantáramos cantáreis cantaram","cantarei cantarás cantará cantaremos cantareis cantarão","cantaria cantarias cantaria cantaríamos cantaríeis cantariam","cante cantes cante cantemos canteis cantem","cantasse cantasses cantasse cantássemos cantásseis cantassem"],
 comer:["como comes come comemos comeis comem","comi comeste comeu comemos comestes comeram","comia comias comia comíamos comíeis comiam","comera comeras comera comêramos comêreis comeram","comerei comerás comerá comeremos comereis comerão","comeria comerias comeria comeríamos comeríeis comeriam","coma comas coma comamos comais comam","comesse comesses comesse comêssemos comêsseis comessem"],
@@ -138,6 +141,19 @@ haver:["hei hás há havemos/hemos haveis/heis hão","houve houveste houve houve
 
 const $=id=>document.getElementById(id);
 const norm=s=>s.trim().toLowerCase().normalize("NFC").replace(/\s+/g," ");
+const IDX=Object.create(null);
+for(const v in D)D[v].forEach((s,t)=>s.split(" ").forEach((f,p)=>f.split("/").forEach(x=>{const k=norm(x);(IDX[k]=IDX[k]||[]).push({v:v,t:t,p:p});})));
+const ORD=["1.ª","2.ª","3.ª"];
+function pers(ps){
+  const s=ps.filter(p=>p<3).map(p=>ORD[p]),pl=ps.filter(p=>p>=3).map(p=>ORD[p-3]);
+  return [s.length?s.join("/")+" sing.":"",pl.length?pl.join("/")+" pl.":""].filter(Boolean).join(" e ");
+}
+function info(g){
+  const m=IDX[g];if(!m)return "";
+  const k={};
+  m.forEach(x=>{const key=x.v+"|"+x.t;(k[key]=k[key]||{v:x.v,t:x.t,ps:[]}).ps.push(x.p);});
+  return Object.values(k).map(x=>x.v+", "+T[x.t].toLowerCase()+", "+pers(x.ps)).join("; ");
+}
 const REG=["cantar","comer","abrir"];
 let n=20,kind="both",q=[],i=0,score=0,miss=[],phase="";
 
@@ -176,14 +192,14 @@ function start(){
 
 function render(){
   const c=q[i];phase="ask";
-  $("prog").textContent="Question "+(i+1)+" of "+q.length;
-  $("score").textContent="Score "+score;
+  $("prog").textContent="Pergunta "+(i+1)+" de "+q.length;
+  $("score").textContent="Pontos "+score;
   $("fill").style.width=(i/q.length*100)+"%";
   $("verb").textContent=c.v;
   $("tense").textContent=T[c.t];
   $("who").textContent=P[c.p][0]+" ("+P[c.p][1]+")";
   const a=$("ans");a.value="";a.readOnly=false;a.className="";
-  $("fb").hidden=true;$("go").textContent="Check";
+  $("fb").hidden=true;$("go").textContent="Verificar";
   a.focus();
 }
 
@@ -191,15 +207,15 @@ function go(){
   if(phase==="ask"){
     const a=$("ans"),c=q[i],g=norm(a.value);
     if(!g)return;
-    const ok=c.a.some(x=>norm(x)===g);
-    if(ok)score++;else miss.push({c:c,g:a.value.trim()});
+    const ok=c.a.some(x=>norm(x)===g),inf=ok?"":info(g);
+    if(ok)score++;else miss.push({c:c,g:a.value.trim(),inf:inf});
     a.readOnly=true;a.className=ok?"ok":"bad";
     const fb=$("fb");fb.hidden=false;fb.className="fb "+(ok?"ok":"bad");
     const others=c.a.filter(x=>norm(x)!==g);
-    fb.textContent=ok?"Correct"+(others.length?" (also accepted: "+others.join(", ")+")":""):"Answer: "+c.a.join(" or ");
-    $("score").textContent="Score "+score;
+    fb.textContent=ok?"Correto"+(others.length?" (também aceite: "+others.join(", ")+")":""):"Resposta: "+c.a.join(" ou ")+(inf?"\n“"+a.value.trim()+"” é uma forma válida de: "+inf:"");
+    $("score").textContent="Pontos "+score;
     $("fill").style.width=((i+1)/q.length*100)+"%";
-    $("go").textContent=i===q.length-1?"See results":"Next";
+    $("go").textContent=i===q.length-1?"Ver resultados":"Seguinte";
     phase="review";
   }else{
     i++;
@@ -210,12 +226,12 @@ function go(){
 function finish(){
   show("done");
   $("res").textContent=score+" / "+q.length;
-  $("pct").textContent=Math.round(score/q.length*100)+"% correct"+(miss.length?"":", no mistakes");
+  $("pct").textContent=Math.round(score/q.length*100)+"% corretas"+(miss.length?"":", sem erros");
   $("misshead").hidden=!miss.length;
   const L=$("miss");L.textContent="";
   miss.forEach(m=>{
     const li=document.createElement("li"),c=m.c;
-    li.textContent=c.v+", "+T[c.t].toLowerCase()+", "+P[c.p][0]+": you wrote “"+m.g+"”, answer "+c.a.join(" or ");
+    li.textContent=c.v+", "+T[c.t].toLowerCase()+", "+P[c.p][0]+": escreveste “"+m.g+"”"+(m.inf?" ("+m.inf+")":"")+"; resposta: "+c.a.join(" ou ");
     L.appendChild(li);
   });
 }
