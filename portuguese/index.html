@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Peter’s Portuguese Verb Drill 🍪</title>
+<title>Treino de Verbos Portugueses do Peter 🍪</title>
 <style>
 :root{
   --bg:#f3f7f4;--card:#ffffff;--text:#14231a;--muted:#587061;--line:#d1ddd4;
@@ -70,13 +70,27 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #misshead{font-weight:600;margin:0 0 6px}
 #miss{margin:0 0 22px;padding-left:20px}
 #miss li{margin-bottom:6px}
+.link{display:inline-block;margin:4px 0;color:var(--accent);font-weight:600;text-decoration:underline}
+#setup .link{display:block;text-align:center;margin-top:16px}
+.chips{flex-wrap:wrap}
+.seg.chips{margin:14px 0}
+.chips button{flex:0 0 auto;padding:8px 14px;font-size:1rem}
+#tables h2{font:600 1.4rem/1.2 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;margin:14px 0 4px}
+.tw{overflow-x:auto}
+.tw+.hint{margin-top:12px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);font-size:.95rem}
+th,td{padding:6px 10px;text-align:left;border-bottom:1px solid var(--line)}
+td:first-child{color:var(--muted);white-space:nowrap}
+th:nth-child(2),td.pt{background:rgba(32,160,96,.14)}
+th:nth-child(3),td.es{background:rgba(242,194,0,.2)}
+.tg td{font-weight:600;color:var(--text);background:var(--bg);padding-top:12px}
 </style>
 </head>
 <body>
 <main>
   <div class="flag" aria-hidden="true"></div>
-  <h1>Peter’s Portuguese Verb Drill 🍪</h1>
-  <p class="sub">Português europeu. Escreve a forma verbal; os acentos contam.</p>
+  <h1>Treino de Verbos Portugueses do Peter 🍪</h1>
+  <p class="sub" id="sub">Português europeu. Escreve a forma verbal; os acentos contam.</p>
 
   <section id="setup" class="card">
     <span class="lbl">Número de formas</span>
@@ -103,6 +117,7 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <span>Só formas sintéticas (sem futuro nem condicional)</span>
     </label>
     <button class="primary" id="start">Começar</button>
+    <a class="link" href="#tables">Ver as tabelas de verbos</a>
   </section>
 
   <section id="quiz" class="card" hidden>
@@ -123,6 +138,16 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     <ul id="miss"></ul>
     <button class="primary" id="again">Jogar outra vez</button>
     <button class="ghost" id="change">Alterar opções</button>
+  </section>
+
+  <section id="tables" hidden>
+    <a class="link" href="#game">Voltar ao jogo</a>
+    <h2>Tabelas de verbos</h2>
+    <p class="sub">Português europeu primeiro, espanhol (Espanha) depois.</p>
+    <div class="seg chips" id="vchips"></div>
+    <div class="tw"><table id="tbl"></table></div>
+    <p class="hint">O mais-que-perfeito simples português não tem equivalente em espanhol, que usa «había cantado». O imperfeito do conjuntivo espanhol tem duas formas (-ra / -se).</p>
+    <a class="link" href="#game">Voltar ao jogo</a>
   </section>
 </main>
 
@@ -157,7 +182,15 @@ function info(g){
 const REG=["cantar","comer","abrir"];
 let n=20,kind="both",q=[],i=0,score=0,miss=[],phase="";
 
-function show(id){["setup","quiz","done"].forEach(s=>$(s).hidden=s!==id)}
+let cur="setup";
+function view(){
+  const t=location.hash==="#tables";
+  ["setup","quiz","done"].forEach(s=>$(s).hidden=t||s!==cur);
+  $("tables").hidden=!t;$("sub").hidden=t;
+  if(t)buildTable();
+  window.scrollTo(0,0);
+}
+function show(id){cur=id;view();}
 
 function seg(id,fn){
   const bs=document.querySelectorAll("#"+id+" button");
@@ -243,6 +276,61 @@ $("change").onclick=()=>show("setup");
 $("ans").addEventListener("keydown",e=>{
   if(e.key==="Enter"&&!e.isComposing){e.preventDefault();if(!e.repeat)go();}
 });
+
+const E={
+cantar:["canto cantas canta cantamos cantáis cantan","canté cantaste cantó cantamos cantasteis cantaron","cantaba cantabas cantaba cantábamos cantabais cantaban","cante cantes cante cantemos cantéis canten","cantara cantaras cantara cantáramos cantarais cantaran","cantar","cantado"],
+comer:["como comes come comemos coméis comen","comí comiste comió comimos comisteis comieron","comía comías comía comíamos comíais comían","coma comas coma comamos comáis coman","comiera comieras comiera comiéramos comierais comieran","comer","comido"],
+abrir:["abro abres abre abrimos abrís abren","abrí abriste abrió abrimos abristeis abrieron","abría abrías abría abríamos abríais abrían","abra abras abra abramos abráis abran","abriera abrieras abriera abriéramos abrierais abrieran","abrir","abierto"],
+ser:["soy eres es somos sois son","fui fuiste fue fuimos fuisteis fueron","era eras era éramos erais eran","sea seas sea seamos seáis sean","fuera fueras fuera fuéramos fuerais fueran","ser","sido"],
+estar:["estoy estás está estamos estáis están","estuve estuviste estuvo estuvimos estuvisteis estuvieron","estaba estabas estaba estábamos estabais estaban","esté estés esté estemos estéis estén","estuviera estuvieras estuviera estuviéramos estuvierais estuvieran","estar","estado"],
+ter:["tengo tienes tiene tenemos tenéis tienen","tuve tuviste tuvo tuvimos tuvisteis tuvieron","tenía tenías tenía teníamos teníais tenían","tenga tengas tenga tengamos tengáis tengan","tuviera tuvieras tuviera tuviéramos tuvierais tuvieran","tendr","tenido"],
+haver:["he has ha hemos habéis han","hube hubiste hubo hubimos hubisteis hubieron","había habías había habíamos habíais habían","haya hayas haya hayamos hayáis hayan","hubiera hubieras hubiera hubiéramos hubierais hubieran","habr","habido"]
+};
+const XI={ter:"tener",haver:"haber"};
+const AUX="había habías había habíamos habíais habían".split(" ");
+const FU="é ás á emos éis án".split(" "),CO="ía ías ía íamos íais ían".split(" ");
+const seRa=w=>w.replace(/ramos$/,"semos").replace(/rais$/,"seis").replace(/ras$/,"ses").replace(/ran$/,"sen").replace(/ra$/,"se");
+const es=(v,t)=>{
+  const e=E[v];
+  if(t===3)return AUX.map(a=>a+" "+e[6]);
+  if(t===4)return FU.map(x=>e[5]+x);
+  if(t===5)return CO.map(x=>e[5]+x);
+  const s=e[{0:0,1:1,2:2,6:3,7:4}[t]].split(" ");
+  return t===7?s.map(w=>w+" / "+seRa(w)):s;
+};
+let tv="cantar";
+function buildTable(){
+  const keys=Object.keys(D),c=$("vchips");
+  if(!c.children.length)keys.forEach(v=>{
+    const b=document.createElement("button");
+    b.textContent=v+(XI[v]?" / "+XI[v]:"");
+    b.onclick=()=>{tv=v;buildTable();};
+    c.appendChild(b);
+  });
+  keys.forEach((v,k)=>{
+    c.children[k].classList.toggle("on",v===tv);
+    c.children[k].setAttribute("aria-pressed",String(v===tv));
+  });
+  const tab=$("tbl");tab.textContent="";
+  const hr=tab.createTHead().insertRow();
+  ["","Português (EP): "+tv,"Español: "+(XI[tv]||tv)].forEach(x=>{
+    const th=document.createElement("th");th.textContent=x;hr.appendChild(th);
+  });
+  const tb=tab.createTBody();
+  T.forEach((name,ti)=>{
+    const g=tb.insertRow();g.className="tg";
+    const gc=g.insertCell();gc.colSpan=3;gc.textContent=name;
+    const pt=D[tv][ti].split(" "),sp=es(tv,ti);
+    for(let p=0;p<6;p++){
+      const r=tb.insertRow();
+      r.insertCell().textContent=P[p][1];
+      const a=r.insertCell();a.className="pt";a.textContent=pt[p].replace("/"," / ");
+      const b=r.insertCell();b.className="es";b.textContent=sp[p];
+    }
+  });
+}
+window.addEventListener("hashchange",view);
+view();
 </script>
 </body>
 </html>
