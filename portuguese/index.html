@@ -180,22 +180,22 @@ table{border:0}
     <p class="sub">Português europeu primeiro, espanhol (Espanha) depois.</p>
     <div class="seg chips" id="vchips"></div>
     <div class="tw"><table id="tbl"></table></div>
-    <p class="hint">O mais-que-perfeito simples português não tem equivalente em espanhol, que usa «había cantado». O imperfeito do conjuntivo espanhol tem duas formas (-ra / -se).</p>
+    <p class="hint">O mais-que-perfeito simples português não tem equivalente em espanhol, que usa «había cantado». O imperfeito do conjuntivo espanhol tem duas formas (-ra / -se). O futuro do conjuntivo espanhol é arcaico e quase só aparece em textos jurídicos e literários.</p>
     <a class="link" href="#game">Voltar ao jogo</a>
   </section>
 </main>
 
 <script>
-const T=["Presente do indicativo","Pretérito perfeito","Pretérito imperfeito","Mais-que-perfeito simples","Futuro","Condicional","Presente do conjuntivo","Pretérito imperfeito do conjuntivo"];
+const T=["Presente do indicativo","Pretérito perfeito","Pretérito imperfeito","Mais-que-perfeito simples","Futuro","Condicional","Presente do conjuntivo","Pretérito imperfeito do conjuntivo","Futuro do conjuntivo"];
 const P=[["eu","1.ª sing."],["tu","2.ª sing."],["ele / ela","3.ª sing."],["nós","1.ª pl."],["vós","2.ª pl."],["eles / elas","3.ª pl."]];
 const D={
-cantar:["canto cantas canta cantamos cantais cantam","cantei cantaste cantou cantámos/cantamos cantastes cantaram","cantava cantavas cantava cantávamos cantáveis cantavam","cantara cantaras cantara cantáramos cantáreis cantaram","cantarei cantarás cantará cantaremos cantareis cantarão","cantaria cantarias cantaria cantaríamos cantaríeis cantariam","cante cantes cante cantemos canteis cantem","cantasse cantasses cantasse cantássemos cantásseis cantassem"],
-comer:["como comes come comemos comeis comem","comi comeste comeu comemos comestes comeram","comia comias comia comíamos comíeis comiam","comera comeras comera comêramos comêreis comeram","comerei comerás comerá comeremos comereis comerão","comeria comerias comeria comeríamos comeríeis comeriam","coma comas coma comamos comais comam","comesse comesses comesse comêssemos comêsseis comessem"],
-abrir:["abro abres abre abrimos abris abrem","abri abriste abriu abrimos abristes abriram","abria abrias abria abríamos abríeis abriam","abrira abriras abrira abríramos abríreis abriram","abrirei abrirás abrirá abriremos abrireis abrirão","abriria abririas abriria abriríamos abriríeis abririam","abra abras abra abramos abrais abram","abrisse abrisses abrisse abríssemos abrísseis abrissem"],
-ser:["sou és é somos sois são","fui foste foi fomos fostes foram","era eras era éramos éreis eram","fora foras fora fôramos fôreis foram","serei serás será seremos sereis serão","seria serias seria seríamos seríeis seriam","seja sejas seja sejamos sejais sejam","fosse fosses fosse fôssemos fôsseis fossem"],
-estar:["estou estás está estamos estais estão","estive estiveste esteve estivemos estivestes estiveram","estava estavas estava estávamos estáveis estavam","estivera estiveras estivera estivéramos estivéreis estiveram","estarei estarás estará estaremos estareis estarão","estaria estarias estaria estaríamos estaríeis estariam","esteja estejas esteja estejamos estejais estejam","estivesse estivesses estivesse estivéssemos estivésseis estivessem"],
-ter:["tenho tens tem temos tendes têm","tive tiveste teve tivemos tivestes tiveram","tinha tinhas tinha tínhamos tínheis tinham","tivera tiveras tivera tivéramos tivéreis tiveram","terei terás terá teremos tereis terão","teria terias teria teríamos teríeis teriam","tenha tenhas tenha tenhamos tenhais tenham","tivesse tivesses tivesse tivéssemos tivésseis tivessem"],
-haver:["hei hás há havemos/hemos haveis/heis hão","houve houveste houve houvemos houvestes houveram","havia havias havia havíamos havíeis haviam","houvera houveras houvera houvéramos houvéreis houveram","haverei haverás haverá haveremos havereis haverão","haveria haverias haveria haveríamos haveríeis haveriam","haja hajas haja hajamos hajais hajam","houvesse houvesses houvesse houvéssemos houvésseis houvessem"]
+cantar:["canto cantas canta cantamos cantais cantam","cantei cantaste cantou cantámos/cantamos cantastes cantaram","cantava cantavas cantava cantávamos cantáveis cantavam","cantara cantaras cantara cantáramos cantáreis cantaram","cantarei cantarás cantará cantaremos cantareis cantarão","cantaria cantarias cantaria cantaríamos cantaríeis cantariam","cante cantes cante cantemos canteis cantem","cantasse cantasses cantasse cantássemos cantásseis cantassem","cantar cantares cantar cantarmos cantardes cantarem"],
+comer:["como comes come comemos comeis comem","comi comeste comeu comemos comestes comeram","comia comias comia comíamos comíeis comiam","comera comeras comera comêramos comêreis comeram","comerei comerás comerá comeremos comereis comerão","comeria comerias comeria comeríamos comeríeis comeriam","coma comas coma comamos comais comam","comesse comesses comesse comêssemos comêsseis comessem","comer comeres comer comermos comerdes comerem"],
+abrir:["abro abres abre abrimos abris abrem","abri abriste abriu abrimos abristes abriram","abria abrias abria abríamos abríeis abriam","abrira abriras abrira abríramos abríreis abriram","abrirei abrirás abrirá abriremos abrireis abrirão","abriria abririas abriria abriríamos abriríeis abririam","abra abras abra abramos abrais abram","abrisse abrisses abrisse abríssemos abrísseis abrissem","abrir abrires abrir abrirmos abrirdes abrirem"],
+ser:["sou és é somos sois são","fui foste foi fomos fostes foram","era eras era éramos éreis eram","fora foras fora fôramos fôreis foram","serei serás será seremos sereis serão","seria serias seria seríamos seríeis seriam","seja sejas seja sejamos sejais sejam","fosse fosses fosse fôssemos fôsseis fossem","for fores for formos fordes forem"],
+estar:["estou estás está estamos estais estão","estive estiveste esteve estivemos estivestes estiveram","estava estavas estava estávamos estáveis estavam","estivera estiveras estivera estivéramos estivéreis estiveram","estarei estarás estará estaremos estareis estarão","estaria estarias estaria estaríamos estaríeis estariam","esteja estejas esteja estejamos estejais estejam","estivesse estivesses estivesse estivéssemos estivésseis estivessem","estiver estiveres estiver estivermos estiverdes estiverem"],
+ter:["tenho tens tem temos tendes têm","tive tiveste teve tivemos tivestes tiveram","tinha tinhas tinha tínhamos tínheis tinham","tivera tiveras tivera tivéramos tivéreis tiveram","terei terás terá teremos tereis terão","teria terias teria teríamos teríeis teriam","tenha tenhas tenha tenhamos tenhais tenham","tivesse tivesses tivesse tivéssemos tivésseis tivessem","tiver tiveres tiver tivermos tiverdes tiverem"],
+haver:["hei hás há havemos/hemos haveis/heis hão","houve houveste houve houvemos houvestes houveram","havia havias havia havíamos havíeis haviam","houvera houveras houvera houvéramos houvéreis houveram","haverei haverás haverá haveremos havereis haverão","haveria haverias haveria haveríamos haveríeis haveriam","haja hajas haja hajamos hajais hajam","houvesse houvesses houvesse houvéssemos houvésseis houvessem","houver houveres houver houvermos houverdes houverem"]
 };
 
 const $=id=>document.getElementById(id);
@@ -324,8 +324,10 @@ const XI={ter:"tener",haver:"haber"};
 const AUX="había habías había habíamos habíais habían".split(" ");
 const FU="é ás á emos éis án".split(" "),CO="ía ías ía íamos íais ían".split(" ");
 const seRa=w=>w.replace(/ramos$/,"semos").replace(/rais$/,"seis").replace(/ras$/,"ses").replace(/ran$/,"sen").replace(/ra$/,"se");
+const reRa=w=>w.replace(/ramos$/,"remos").replace(/rais$/,"reis").replace(/ras$/,"res").replace(/ran$/,"ren").replace(/ra$/,"re");
 const es=(v,t)=>{
   const e=E[v];
+  if(t===8)return e[4].split(" ").map(reRa);
   if(t===3)return AUX.map(a=>a+" "+e[6]);
   if(t===4)return FU.map(x=>e[5]+x);
   if(t===5)return CO.map(x=>e[5]+x);
