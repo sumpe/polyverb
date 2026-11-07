@@ -145,7 +145,7 @@ table{border:0}
       <button data-v="regular" aria-pressed="false">Regulares</button>
       <button data-v="irregular" aria-pressed="false">Irregulares</button>
     </div>
-    <p class="hint">Regulares: muitos verbos em -ar, -er e -ir (como cantar, comer, abrir). Irregulares: ser, estar, ter, haver.</p>
+    <p class="hint">Regulares: muitos verbos em -ar, -er e -ir (como cantar, comer, abrir). Irregulares: ser, estar, ter, haver, pôr, ir.</p>
     <label class="switch">
       <input type="checkbox" id="vos" checked>
       <span class="track"></span>
@@ -202,7 +202,9 @@ abrir:["abro abres abre abrimos abris abrem","abri abriste abriu abrimos abriste
 ser:["sou és é somos sois são","fui foste foi fomos fostes foram","era eras era éramos éreis eram","fora foras fora fôramos fôreis foram","serei serás será seremos sereis serão","seria serias seria seríamos seríeis seriam","seja sejas seja sejamos sejais sejam","fosse fosses fosse fôssemos fôsseis fossem","for fores for formos fordes forem"],
 estar:["estou estás está estamos estais estão","estive estiveste esteve estivemos estivestes estiveram","estava estavas estava estávamos estáveis estavam","estivera estiveras estivera estivéramos estivéreis estiveram","estarei estarás estará estaremos estareis estarão","estaria estarias estaria estaríamos estaríeis estariam","esteja estejas esteja estejamos estejais estejam","estivesse estivesses estivesse estivéssemos estivésseis estivessem","estiver estiveres estiver estivermos estiverdes estiverem"],
 ter:["tenho tens tem temos tendes têm","tive tiveste teve tivemos tivestes tiveram","tinha tinhas tinha tínhamos tínheis tinham","tivera tiveras tivera tivéramos tivéreis tiveram","terei terás terá teremos tereis terão","teria terias teria teríamos teríeis teriam","tenha tenhas tenha tenhamos tenhais tenham","tivesse tivesses tivesse tivéssemos tivésseis tivessem","tiver tiveres tiver tivermos tiverdes tiverem"],
-haver:["hei hás há havemos/hemos haveis/heis hão","houve houveste houve houvemos houvestes houveram","havia havias havia havíamos havíeis haviam","houvera houveras houvera houvéramos houvéreis houveram","haverei haverás haverá haveremos havereis haverão","haveria haverias haveria haveríamos haveríeis haveriam","haja hajas haja hajamos hajais hajam","houvesse houvesses houvesse houvéssemos houvésseis houvessem","houver houveres houver houvermos houverdes houverem"]
+haver:["hei hás há havemos/hemos haveis/heis hão","houve houveste houve houvemos houvestes houveram","havia havias havia havíamos havíeis haviam","houvera houveras houvera houvéramos houvéreis houveram","haverei haverás haverá haveremos havereis haverão","haveria haverias haveria haveríamos haveríeis haveriam","haja hajas haja hajamos hajais hajam","houvesse houvesses houvesse houvéssemos houvésseis houvessem","houver houveres houver houvermos houverdes houverem"],
+"pôr":["ponho pões põe pomos pondes põem","pus puseste pôs pusemos pusestes puseram","punha punhas punha púnhamos púnheis punham","pusera puseras pusera puséramos puséreis puseram","porei porás porá poremos poreis porão","poria porias poria poríamos poríeis poriam","ponha ponhas ponha ponhamos ponhais ponham","pusesse pusesses pusesse puséssemos pusésseis pusessem","puser puseres puser pusermos puserdes puserem"],
+ir:["vou vais vai vamos ides vão","fui foste foi fomos fostes foram","ia ias ia íamos íeis iam","fora foras fora fôramos fôreis foram","irei irás irá iremos ireis irão","iria irias iria iríamos iríeis iriam","vá vás vá vamos vades vão","fosse fosses fosse fôssemos fôsseis fossem","for fores for formos fordes forem"]
 };
 
 const $=id=>document.getElementById(id);
@@ -348,9 +350,11 @@ abrir:["abro abres abre abrimos abrís abren","abrí abriste abrió abrimos abri
 ser:["soy eres es somos sois son","fui fuiste fue fuimos fuisteis fueron","era eras era éramos erais eran","sea seas sea seamos seáis sean","fuera fueras fuera fuéramos fuerais fueran","ser","sido"],
 estar:["estoy estás está estamos estáis están","estuve estuviste estuvo estuvimos estuvisteis estuvieron","estaba estabas estaba estábamos estabais estaban","esté estés esté estemos estéis estén","estuviera estuvieras estuviera estuviéramos estuvierais estuvieran","estar","estado"],
 ter:["tengo tienes tiene tenemos tenéis tienen","tuve tuviste tuvo tuvimos tuvisteis tuvieron","tenía tenías tenía teníamos teníais tenían","tenga tengas tenga tengamos tengáis tengan","tuviera tuvieras tuviera tuviéramos tuvierais tuvieran","tendr","tenido"],
-haver:["he has ha hemos habéis han","hube hubiste hubo hubimos hubisteis hubieron","había habías había habíamos habíais habían","haya hayas haya hayamos hayáis hayan","hubiera hubieras hubiera hubiéramos hubierais hubieran","habr","habido"]
+haver:["he has ha hemos habéis han","hube hubiste hubo hubimos hubisteis hubieron","había habías había habíamos habíais habían","haya hayas haya hayamos hayáis hayan","hubiera hubieras hubiera hubiéramos hubierais hubieran","habr","habido"],
+"pôr":["pongo pones pone ponemos ponéis ponen","puse pusiste puso pusimos pusisteis pusieron","ponía ponías ponía poníamos poníais ponían","ponga pongas ponga pongamos pongáis pongan","pusiera pusieras pusiera pusiéramos pusierais pusieran","pondr","puesto"],
+ir:["voy vas va vamos vais van","fui fuiste fue fuimos fuisteis fueron","iba ibas iba íbamos ibais iban","vaya vayas vaya vayamos vayáis vayan","fuera fueras fuera fuéramos fuerais fueran","ir","ido"]
 };
-const XI={ter:"tener",haver:"haber"};
+const XI={ter:"tener",haver:"haber","pôr":"poner"};
 const AUX="había habías había habíamos habíais habían".split(" ");
 const FU="é ás á emos éis án".split(" "),CO="ía ías ía íamos íais ían".split(" ");
 const seRa=w=>w.replace(/ramos$/,"semos").replace(/rais$/,"seis").replace(/ras$/,"ses").replace(/ran$/,"sen").replace(/ra$/,"se");
