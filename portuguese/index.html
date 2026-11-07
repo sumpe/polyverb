@@ -117,6 +117,12 @@ main{margin:-56px auto 0;padding:0 16px 48px;position:relative}
 .tw{border:1px solid var(--line);border-radius:14px}
 table{border:0}
 .tg td{border-left:4px solid #da291c}
+.who{margin:8px 0 12px}
+.pgrid{display:grid;grid-template-columns:repeat(2,26px);grid-auto-rows:19px;width:max-content;margin:0 auto 22px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.pgrid i{position:relative;border:0 solid var(--line)}
+.pgrid i:nth-child(odd){border-right-width:1px}
+.pgrid i:nth-child(n+3){border-top-width:1px}
+.pgrid i.on::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--accent)}
 </style>
 </head>
 <body>
@@ -160,6 +166,7 @@ table{border:0}
     <div class="verb" id="verb"></div>
     <div class="tense" id="tense"></div>
     <div class="who" id="who"></div>
+    <div class="pgrid" id="pgrid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <input id="ans" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="A tua resposta">
     <div id="fb" class="fb" hidden></div>
     <button class="primary" id="go">Verificar</button>
@@ -265,6 +272,7 @@ function render(){
   $("verb").textContent=c.v;
   $("tense").textContent=T[c.t];
   $("who").textContent=P[c.p][0]+" ("+P[c.p][1]+")";
+  [...$("pgrid").children].forEach((d,k)=>d.classList.toggle("on",k===(c.p%3)*2+(c.p>=3?1:0)));
   const a=$("ans");a.value="";a.readOnly=false;a.className="";
   $("fb").hidden=true;$("go").textContent="Verificar";
   a.focus();
