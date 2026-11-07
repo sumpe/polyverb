@@ -145,7 +145,7 @@ table{border:0}
       <button data-v="regular" aria-pressed="false">Regulares</button>
       <button data-v="irregular" aria-pressed="false">Irregulares</button>
     </div>
-    <p class="hint">Regulares: cantar, comer, abrir. Irregulares: ser, estar, ter, haver.</p>
+    <p class="hint">Regulares: muitos verbos em -ar, -er e -ir (como cantar, comer, abrir). Irregulares: ser, estar, ter, haver.</p>
     <label class="switch">
       <input type="checkbox" id="vos" checked>
       <span class="track"></span>
@@ -208,7 +208,26 @@ haver:["hei hás há havemos/hemos haveis/heis hão","houve houveste houve houve
 const $=id=>document.getElementById(id);
 const norm=s=>s.trim().toLowerCase().normalize("NFC").replace(/\s+/g," ");
 const IDX=Object.create(null);
-for(const v in D)D[v].forEach((s,t)=>s.split(" ").forEach((f,p)=>f.split("/").forEach(x=>{const k=norm(x);(IDX[k]=IDX[k]||[]).push({v:v,t:t,p:p});})));
+const REGV={
+ar:["cantar","falar","andar","pensar","trabalhar","comprar","estudar","chamar","usar","esperar","ajudar","gostar","mostrar","ganhar","mandar","entrar","olhar","amar","levar","tomar","passar","deixar","lavar","tirar","acabar","parar","terminar","preparar","visitar","lembrar","mudar","morar","viajar","nadar","jantar"],
+er:["comer","beber","vender","correr","escrever","aprender","responder","esconder","prometer","temer","varrer","entender","defender","ofender","atender","dever","mexer","ceder"],
+ir:["partir","decidir","abrir","assistir","existir","insistir","admitir","permitir","unir","dividir","discutir","cumprir","aplaudir","persistir","resistir","omitir","emitir","imprimir","invadir"]
+};
+const EN={
+ar:["o as a amos ais am","ei aste ou ámos/amos astes aram","ava avas ava ávamos áveis avam","ara aras ara áramos áreis aram","","","e es e emos eis em","asse asses asse ássemos ásseis assem",""],
+er:["o es e emos eis em","i este eu emos estes eram","ia ias ia íamos íeis iam","era eras era êrámos êreis eram".replace("êrámos","êramos"),"","","a as a amos ais am","esse esses esse êssemos êsseis essem",""],
+ir:["o es e imos is em","i iste iu imos istes iram","ia ias ia íamos íeis iam","ira iras ira íramos íreis iram","","","a as a amos ais am","isse isses isse íssemos ísseis issem",""]
+};
+const TL4="ei ás á emos eis ão".split(" "),TL5="ia ias ia íamos íeis iam".split(" "),TL8=["","es","","mos","des","em"];
+function conj(v){
+  const k=v.slice(-2),s=v.slice(0,-2);
+  const mk=(st,en)=>en.map(x=>x.split("/").map(y=>st+y).join("/")).join(" ");
+  return EN[k].map((e,t)=>t===4?mk(v,TL4):t===5?mk(v,TL5):t===8?mk(v,TL8):mk(s,e.split(" ")));
+}
+const shuf=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]];}return a;};
+const ALLV=Object.assign({},D);
+for(const c in REGV)REGV[c].forEach(v=>{if(!ALLV[v])ALLV[v]=conj(v);});
+for(const v in ALLV)ALLV[v].forEach((s,t)=>s.split(" ").forEach((f,p)=>f.split("/").forEach(x=>{const k=norm(x);(IDX[k]=IDX[k]||[]).push({v:v,t:t,p:p});})));
 const ORD=["1.ª","2.ª","3.ª"];
 function pers(ps){
   const s=ps.filter(p=>p<3).map(p=>ORD[p]),pl=ps.filter(p=>p>=3).map(p=>ORD[p-3]);
@@ -255,12 +274,15 @@ function start(){
       if(syn&&(t===4||t===5))return;
       s.split(" ").forEach((f,p)=>{
         if(p===4&&!vos)return;
-        pool.push({v,t,p,a:f.split("/")});
+        pool.push({v,t,p,a:f.split("/"),r:REG.includes(v)});
       });
     });
   }
   for(let k=pool.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[pool[k],pool[j]]=[pool[j],pool[k]];}
   q=pool.slice(0,n);i=0;score=0;miss=[];
+  const ord=shuf(["ar","er","ir"]),bank={ar:shuf(REGV.ar),er:shuf(REGV.er),ir:shuf(REGV.ir)};
+  const R=q.filter(x=>x.r),cl=shuf(R.map((_,k)=>ord[k%3]));
+  R.forEach((x,k)=>{const w=bank[cl[k]].pop();x.v=w;x.a=conj(w)[x.t].split(" ")[x.p].split("/");});
   show("quiz");render();
 }
 
