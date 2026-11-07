@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trening polskich czasowników Petera 🥟</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --f:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --bg:#f7f4f4;--card:#ffffff;--text:#241a1c;--muted:#6f6264;--line:#e3dadb;
+  --accent:#c8102e;--accent-text:#ffffff;--ok:#1b7a47;--okbg:#e1f3e8;--bad:#b3261e;--badbg:#fbe9e7;
+  color-scheme:light;box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#171112;--card:#221a1b;--text:#f3ecec;--muted:#b3a5a7;--line:#3a2e30;
+    --accent:#ff6b82;--accent-text:#2a0710;--ok:#6fd19a;--okbg:#163625;--bad:#ff9a92;--badbg:#401f1d;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171112;--card:#221a1b;--text:#f3ecec;--muted:#b3a5a7;--line:#3a2e30;
+  --accent:#ff6b82;--accent-text:#2a0710;--ok:#6fd19a;--okbg:#163625;--bad:#ff9a92;--badbg:#401f1d;
+  color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:16px/1.5 var(--f)}
+.hero{position:relative;overflow:hidden;color:#fff;padding:36px 0 92px;background:linear-gradient(160deg,#dc143c 0%,#c8102e 50%,#8f0b21 100%)}
+.hero::before{content:"";position:absolute;right:-56px;top:-56px;width:200px;height:200px;border-radius:50%;border:20px solid rgba(255,255,255,.22)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:#fff}
+.hero .in{position:relative;max-width:520px;margin:0 auto;padding:0 20px}
+h1{font:800 clamp(1.7rem,7vw,2.3rem)/1.08 var(--f);letter-spacing:-.02em;margin:0;padding-right:72px}
+.sub{color:rgba(255,255,255,.88);margin:12px 0 0}
+main{max-width:520px;margin:-56px auto 0;padding:0 16px 48px;position:relative}
+main.wide{max-width:1100px}
+.card,#tables{background:var(--card);border-radius:24px;padding:24px 20px;box-shadow:0 12px 32px rgba(120,10,30,.14),0 2px 6px rgba(0,0,0,.05)}
+.lbl{display:block;font-weight:700;margin-bottom:8px}
+.seg{display:flex;gap:8px;margin-bottom:22px}
+.seg.tight{margin-bottom:8px}
+.seg button{flex:1;padding:12px 8px;border:0;border-radius:999px;background:var(--bg);color:var(--text);font:600 1rem var(--f);cursor:pointer}
+.seg button.on{background:var(--accent);color:var(--accent-text);box-shadow:0 4px 12px rgba(200,16,46,.3)}
+.chips{flex-wrap:wrap}
+.chips button{flex:0 0 auto;padding:8px 14px}
+.hint{color:var(--muted);font-size:.85rem;margin:0 0 22px}
+button{font-family:var(--f)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.primary{width:100%;padding:16px;border:0;border-radius:999px;background:var(--accent);color:var(--accent-text);font-size:1.05rem;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(200,16,46,.28);transition:transform .1s}
+.primary:active{transform:scale(.985)}
+.ghost{width:100%;padding:12px;margin-top:10px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--text);font-size:1rem;cursor:pointer}
+.link{display:inline-block;margin:4px 0;color:var(--accent);font-weight:600;text-decoration:underline}
+#setup .link{display:block;text-align:center;margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:999px;text-decoration:none}
+#tables .link{padding:8px 16px;border-radius:999px;background:var(--bg);text-decoration:none;margin:0 0 6px}
+.top{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem;margin-bottom:8px}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:26px}
+#fill{height:100%;width:0;background:var(--accent);border-radius:4px;transition:width .25s}
+.verb{font:800 3.2rem/1 var(--f);letter-spacing:-.03em;text-align:center}
+.tense{display:table;margin:12px auto 0;padding:5px 16px;border:2px solid var(--accent);border-radius:999px;color:var(--accent);font-weight:700}
+.who{text-align:center;color:var(--muted);font-weight:600;margin:10px 0 12px;font-size:1.05rem}
+.pgrid{display:grid;grid-template-columns:repeat(2,26px);grid-auto-rows:19px;width:max-content;margin:0 auto 22px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.pgrid i{position:relative;border:0 solid var(--line)}
+.pgrid i:nth-child(odd){border-right-width:1px}
+.pgrid i:nth-child(n+3){border-top-width:1px}
+.pgrid i.on::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--accent)}
+#ans{width:100%;padding:14px;font:700 1.3rem var(--f);text-align:center;border:2px solid transparent;border-radius:16px;background:var(--bg);color:var(--text)}
+#ans:focus{outline:none;border-color:var(--accent)}
+#ans.ok{border-color:var(--ok);background:var(--okbg)}
+#ans.bad{border-color:var(--bad);background:var(--badbg)}
+.fb{margin:12px 0 0;padding:10px 12px;border-radius:12px;text-align:center;font-weight:600;white-space:pre-line}
+.fb.ok{background:var(--okbg);color:var(--ok)}
+.fb.bad{background:var(--badbg);color:var(--bad)}
+#go{margin-top:16px}
+#res{font:800 3.6rem/1 var(--f);letter-spacing:-.03em;text-align:center;color:var(--accent)}
+#pct{text-align:center;color:var(--muted);margin:4px 0 20px}
+#misshead{font-weight:700;margin:0 0 6px}
+#miss{margin:0 0 22px;padding-left:20px}
+#miss li{margin-bottom:6px}
+#tables h2{font:800 1.5rem/1.2 var(--f);letter-spacing:-.02em;margin:14px 0 4px}
+#tables .sub{color:var(--muted);margin:0 0 4px}
+#tables .hint{margin-top:12px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);font-size:.95rem}
+th,td{padding:6px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th.vh{text-align:center;font-weight:800;border-left:2px solid var(--line)}
+td:not(:first-child){border-left:2px solid var(--line)}
+th:first-child,tbody tr:not(.tg) td:first-child{position:sticky;left:0;z-index:1;background:var(--card);color:var(--muted);max-width:170px}
+.tg td{font-weight:700;background:var(--bg);padding-top:12px;border-left:4px solid var(--accent)}
+.tl{display:inline-block;position:sticky;left:10px}
+</style>
+</head>
+<body>
+<header class="hero"><div class="in">
+  <h1>Trening polskich czasowników Petera 🥟</h1>
+  <p class="sub" id="sub">Czasowniki regularne. Wpisz formę; znaki diakrytyczne się liczą.</p>
+</div></header>
+<main>
+  <section id="setup" class="card">
+    <span class="lbl">Liczba pytań</span>
+    <div class="seg" id="seg">
+      <button data-v="10" aria-pressed="false">10</button>
+      <button data-v="20" class="on" aria-pressed="true">20</button>
+      <button data-v="30" aria-pressed="false">30</button>
+    </div>
+    <span class="lbl">Odmiana</span>
+    <div class="seg tight" id="cls">
+      <button data-v="all" class="on" aria-pressed="true">Wszystkie</button>
+      <button data-v="ac" aria-pressed="false">-ać</button>
+      <button data-v="ow" aria-pressed="false">-ować</button>
+      <button data-v="ic" aria-pressed="false">-ić / -yć</button>
+    </div>
+    <p class="hint">Na przykład: czytać (czytam), kupować (kupuję), robić (robię), uczyć (uczę).</p>
+    <span class="lbl">Czasy i tryby</span>
+    <div class="seg chips" id="tns"></div>
+    <button class="primary" id="start">Zaczynij</button>
+    <a class="link" href="#tables">Zobacz tabele czasowników</a>
+  </section>
+
+  <section id="quiz" class="card" hidden>
+    <div class="top"><span id="prog"></span><span id="score"></span></div>
+    <div class="bar"><div id="fill"></div></div>
+    <div class="verb" id="verb"></div>
+    <div class="tense" id="tense"></div>
+    <div class="who" id="who"></div>
+    <div class="pgrid" id="pgrid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <input id="ans" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Twoja odpowiedź">
+    <div id="fb" class="fb" hidden></div>
+    <button class="primary" id="go">Sprawdź</button>
+  </section>
+
+  <section id="done" class="card" hidden>
+    <div id="res"></div>
+    <div id="pct"></div>
+    <p id="misshead">Do powtórki</p>
+    <ul id="miss"></ul>
+    <button class="primary" id="again">Zagraj ponownie</button>
+    <button class="ghost" id="change">Zmień ustawienia</button>
+  </section>
+
+  <section id="tables" hidden>
+    <a class="link" href="#game">Wróć do gry</a>
+    <h2>Tabele czasowników</h2>
+    <p class="sub">Wybierz jeden lub więcej czasowników.</p>
+    <div class="seg chips" id="vchips" style="margin:14px 0"></div>
+    <div class="tw"><table id="tbl"></table></div>
+    <p class="hint">W czasie przeszłym i trybie przypuszczającym forma zależy od rodzaju. Czas przyszły złożony to „będę” + bezokolicznik; dopuszczalna jest też forma z -ł (będę czytał).</p>
+    <a class="link" href="#game">Wróć do gry</a>
+  </section>
+</main>
+
+<script>
+const T=["Czas teraźniejszy","Czas przeszły","Czas przyszły","Tryb przypuszczający"];
+const TS=["Teraźniejszy","Przeszły","Przyszły","Przypuszczający"];
+const PR=["ja","ty","on / ona / ono","my","wy","oni / one"];
+const GR="grupa z mężczyznami / same kobiety".split(" / ");
+const AUX=["będę","będziesz","będzie","będziemy","będziecie","będą"];
+const PAST=[[0,0,"łem","łbym"],[0,1,"łam","łabym"],[1,0,"łeś","łbyś"],[1,1,"łaś","łabyś"],[2,0,"ł","łby"],[2,1,"ła","łaby"],[2,2,"ło","łoby"],[3,0,"liśmy","libyśmy"],[3,1,"łyśmy","łybyśmy"],[4,0,"liście","libyście"],[4,1,"łyście","łybyście"],[5,0,"li","liby"],[5,1,"ły","łyby"]];
+const lab=(p,g)=>p===2?["on","ona","ono"][g]:PR[p]+" ("+(p<2?["mężczyzna","kobieta"][g]:GR[g])+")";
+const V={
+ac:["czytać","pytać","słuchać","grać","czekać","szukać","kochać","pamiętać","wracać","sprzątać","odpowiadać","zaczynać","pomagać","otwierać","zamykać","mieszkać","śpiewać","wołać","oglądać","zapominać","powtarzać","używać"],
+ow:["kupować","pracować","gotować","rysować","planować","potrzebować","dziękować","pakować","parkować","rezerwować","studiować","malować","ratować","podróżować","spacerować","telefonować","organizować"],
+ic:["robić","lubić","mówić","dzwonić","gubić","karmić","bronić","chwalić","palić","mylić","uczyć","liczyć","ćwiczyć","tańczyć","tłumaczyć","męczyć","kończyć","marzyć","mierzyć"]
+};
+function conj(v){
+  const s=v.slice(0,-1);let pr;
+  if(v.endsWith("ować")){const b=v.slice(0,-4);pr=["uję","ujesz","uje","ujemy","ujecie","ują"].map(e=>b+e);}
+  else if(v.endsWith("ać"))pr=["m","sz","","my","cie","ją"].map(e=>s+e);
+  else{
+    const b=v.slice(0,-2),E=v.endsWith("yć")?["ę","ysz","y","ymy","ycie","ą"]:b.endsWith("l")?["ę","isz","i","imy","icie","ą"]:["ię","isz","i","imy","icie","ią"];
+    pr=E.map(e=>b+e);
+  }
+  const fu=AUX.map((x,p)=>{
+    const l=p<3?[s+"ł",s+"ła"]:[s+"li",s+"ły"];
+    if(p===2)l.push(s+"ło");
+    return{p,w:PR[p],a:[x+" "+v].concat(l.map(y=>x+" "+y))};
+  });
+  return[pr.map((f,p)=>({p,w:PR[p],a:[f]})),PAST.map(r=>({p:r[0],w:lab(r[0],r[1]),a:[s+r[2]]})),fu,PAST.map(r=>({p:r[0],w:lab(r[0],r[1]),a:[s+r[3]]}))];
+}
+
+const $=id=>document.getElementById(id);
+const norm=s=>s.trim().toLowerCase().normalize("NFC").replace(/\s+/g," ");
+const shuf=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]];}return a;};
+const IDX=Object.create(null);
+for(const c in V)V[c].forEach(v=>conj(v).forEach((rows,t)=>rows.forEach(r=>r.a.forEach(f=>{
+  const k=norm(f);(IDX[k]=IDX[k]||[]).push({v:v,t:t,w:r.w});
+}))));
+function info(g){
+  const m=IDX[g];if(!m)return"";
+  const k={};
+  m.forEach(x=>{const key=x.v+"|"+x.t;(k[key]=k[key]||{v:x.v,t:x.t,w:[]}).w.push(x.w);});
+  return Object.values(k).map(x=>x.v+", "+T[x.t].toLowerCase()+", "+x.w.join(" / ")).join("; ");
+}
+
+let n=20,cls="all",selT=[0,1,2,3],q=[],i=0,score=0,miss=[],phase="",cur="setup",sel=["czytać"];
+const REP=["czytać","kupować","robić","uczyć"];
+
+function seg(id,fn){
+  const bs=document.querySelectorAll("#"+id+" button");
+  bs.forEach(b=>b.onclick=()=>{
+    fn(b.dataset.v);
+    bs.forEach(x=>{x.classList.toggle("on",x===b);x.setAttribute("aria-pressed",String(x===b));});
+  });
+}
+seg("seg",v=>{n=+v;});
+seg("cls",v=>{cls=v;});
+
+function toggles(box,labels,get,set){
+  const c=$(box);
+  labels.forEach((l,k)=>{
+    const b=document.createElement("button");b.textContent=l;
+    b.onclick=()=>{
+      const a=get(),on=a.includes(k);
+      if(on&&a.length===1)return;
+      set(on?a.filter(x=>x!==k):a.concat(k));
+      paint();
+    };
+    c.appendChild(b);
+  });
+  function paint(){[...c.children].forEach((b,k)=>{const on=get().includes(k);b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on));});}
+  paint();
+  return paint;
+}
+toggles("tns",TS,()=>selT,a=>{selT=a;});
+const paintRep=toggles("vchips",REP,()=>sel.map(v=>REP.indexOf(v)),a=>{sel=a.sort((x,y)=>x-y).map(k=>REP[k]);buildTable();});
+
+function view(){
+  const t=location.hash==="#tables";
+  ["setup","quiz","done"].forEach(s=>$(s).hidden=t||s!==cur);
+  $("tables").hidden=!t;$("sub").hidden=t;
+  document.querySelector("main").classList.toggle("wide",t);
+  if(t)buildTable();
+  window.scrollTo(0,0);
+}
+function show(id){cur=id;view();}
+
+function start(){
+  const ts=shuf(selT),cs=cls==="all"?["ac","ow","ic"]:[cls],bank={};
+  const tl=shuf(Array.from({length:n},(_,k)=>ts[k%ts.length])),cl=shuf(Array.from({length:n},(_,k)=>cs[k%cs.length]));
+  q=tl.map((t,k)=>{
+    const c=cl[k];if(!bank[c]||!bank[c].length)bank[c]=shuf(V[c]);
+    const v=bank[c].pop(),rows=conj(v)[t],r=rows[Math.floor(Math.random()*rows.length)];
+    return{v:v,t:t,p:r.p,w:r.w,a:r.a};
+  });
+  i=0;score=0;miss=[];
+  show("quiz");render();
+}
+
+function render(){
+  const c=q[i];phase="ask";
+  $("prog").textContent="Pytanie "+(i+1)+" z "+q.length;
+  $("score").textContent="Punkty "+score;
+  $("fill").style.width=(i/q.length*100)+"%";
+  $("verb").textContent=c.v;
+  $("tense").textContent=T[c.t];
+  $("who").textContent=c.w;
+  [...$("pgrid").children].forEach((d,k)=>d.classList.toggle("on",k===(c.p%3)*2+(c.p>=3?1:0)));
+  const a=$("ans");a.value="";a.readOnly=false;a.className="";
+  $("fb").hidden=true;$("go").textContent="Sprawdź";
+  a.focus();
+}
+
+function go(){
+  if(phase==="ask"){
+    const a=$("ans"),c=q[i],g=norm(a.value);
+    if(!g)return;
+    const ok=c.a.some(x=>norm(x)===g),inf=ok?"":info(g);
+    if(ok)score++;else miss.push({c:c,g:a.value.trim(),inf:inf});
+    a.readOnly=true;a.className=ok?"ok":"bad";
+    const fb=$("fb");fb.hidden=false;fb.className="fb "+(ok?"ok":"bad");
+    const others=c.a.filter(x=>norm(x)!==g);
+    fb.textContent=ok?"Dobrze"+(others.length?" (także poprawnie: "+others.join(", ")+")":""):"Odpowiedź: "+c.a.join(" lub ")+(inf?"\n„"+a.value.trim()+"” to poprawna forma: "+inf:"");
+    $("score").textContent="Punkty "+score;
+    $("fill").style.width=((i+1)/q.length*100)+"%";
+    $("go").textContent=i===q.length-1?"Zobacz wynik":"Dalej";
+    phase="review";
+  }else{
+    i++;
+    if(i<q.length)render();else finish();
+  }
+}
+
+function finish(){
+  show("done");
+  $("res").textContent=score+" / "+q.length;
+  $("pct").textContent=Math.round(score/q.length*100)+"% poprawnych"+(miss.length?"":", bez błędów");
+  $("misshead").hidden=!miss.length;
+  const L=$("miss");L.textContent="";
+  miss.forEach(m=>{
+    const li=document.createElement("li"),c=m.c;
+    li.textContent=c.v+", "+T[c.t].toLowerCase()+", "+c.w+": wpisano „"+m.g+"”"+(m.inf?" ("+m.inf+")":"")+"; poprawnie: "+c.a[0];
+    L.appendChild(li);
+  });
+}
+
+function buildTable(){
+  paintRep();
+  const vs=sel,tab=$("tbl"),cj=vs.map(conj);
+  tab.textContent="";tab.style.minWidth=(170+vs.length*150)+"px";
+  const h=tab.createTHead().insertRow();
+  [""].concat(vs).forEach((x,k)=>{
+    const th=document.createElement("th");th.textContent=x;if(k)th.className="vh";h.appendChild(th);
+  });
+  const tb=tab.createTBody();
+  T.forEach((name,t)=>{
+    const g=tb.insertRow();g.className="tg";
+    const gc=g.insertCell();gc.colSpan=1+vs.length;
+    const sp=document.createElement("span");sp.className="tl";sp.textContent=name;gc.appendChild(sp);
+    cj[0][t].forEach((row,k)=>{
+      const r=tb.insertRow();r.insertCell().textContent=row.w;
+      cj.forEach(x=>{r.insertCell().textContent=x[t][k].a[0];});
+    });
+  });
+}
+
+$("start").onclick=start;
+$("go").onclick=go;
+$("again").onclick=start;
+$("change").onclick=()=>show("setup");
+$("ans").addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&!e.isComposing){e.preventDefault();if(!e.repeat)go();}
+});
+window.addEventListener("hashchange",view);
+view();
+</script>
+</body>
+</html>
