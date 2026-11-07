@@ -118,6 +118,8 @@ main{margin:-56px auto 0;padding:0 16px 48px;position:relative}
 table{border:0}
 .tg td{border-left:4px solid #da291c}
 .who{margin:8px 0 12px}
+.tense.sj{background:#ffe000;border-color:#ffe000;color:#3b3000}
+.tg.sj td{border-left-color:#f2c200}
 .pgrid{display:grid;grid-template-columns:repeat(2,26px);grid-auto-rows:19px;width:max-content;margin:0 auto 22px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .pgrid i{position:relative;border:0 solid var(--line)}
 .pgrid i:nth-child(odd){border-right-width:1px}
@@ -302,6 +304,7 @@ function render(){
   $("fill").style.width=(i/q.length*100)+"%";
   $("verb").textContent=c.v;
   $("tense").textContent=T[c.t];
+  $("tense").className="tense"+(c.t>5?" sj":"");
   $("who").textContent=P[c.p][0]+" ("+P[c.p][1]+")";
   [...$("pgrid").children].forEach((d,k)=>d.classList.toggle("on",k===(c.p%3)*2+(c.p>=3?1:0)));
   const a=$("ans");a.value="";a.readOnly=false;a.className="";
@@ -406,7 +409,7 @@ function buildTable(){
   });
   const tb=tab.createTBody();
   T.forEach((name,ti)=>{
-    const g=tb.insertRow();g.className="tg";
+    const g=tb.insertRow();g.className="tg"+(ti>5?" sj":"");
     const gc=g.insertCell();gc.colSpan=1+vs.length*2;
     const sp=document.createElement("span");sp.className="tl";sp.textContent=name;gc.appendChild(sp);
     const cols=vs.map(v=>[D[v][ti].split(" "),es(v,ti)]);
