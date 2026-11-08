@@ -132,6 +132,7 @@ th:first-child{position:sticky;left:0;z-index:2;background:var(--card)}
 tbody tr:not(.tg) td:first-child{position:sticky;left:0;z-index:1;background:var(--card)}
 .tl{display:inline-block;position:sticky;left:10px}
 main.wide{max-width:1100px}
+.gl{flex:0 0 100%;font-size:.8rem;font-weight:700;color:var(--muted);margin-top:6px}
 </style>
 </head>
 <body>
@@ -149,12 +150,8 @@ main.wide{max-width:1100px}
       <button data-v="30" aria-pressed="false">30</button>
     </div>
     <span class="lbl">Verbos</span>
-    <div class="seg tight" id="kind">
-      <button data-v="both" class="on" aria-pressed="true">Todos</button>
-      <button data-v="regular" aria-pressed="false">Regulares</button>
-      <button data-v="irregular" aria-pressed="false">Irregulares</button>
-    </div>
-    <p class="hint">Regulares: muitos verbos em -ar, -er e -ir (como cantar, comer, abrir). Irregulares: ser, estar, ter, haver, pôr, ir.</p>
+    <div class="seg chips tight" id="kinds"></div>
+    <p class="hint">Regulares: muitos verbos em -ar, -er e -ir. Essenciais: ser, estar, ter, haver, pôr, ir. Frequentes: fazer, dizer, dar, ver, vir, poder, querer, saber. Complementares: trazer, ler, sair, ouvir, pedir, dormir.</p>
     <label class="switch">
       <input type="checkbox" id="vos" checked>
       <span class="track"></span>
@@ -213,7 +210,21 @@ estar:["estou estás está estamos estais estão","estive estiveste esteve estiv
 ter:["tenho tens tem temos tendes têm","tive tiveste teve tivemos tivestes tiveram","tinha tinhas tinha tínhamos tínheis tinham","tivera tiveras tivera tivéramos tivéreis tiveram","terei terás terá teremos tereis terão","teria terias teria teríamos teríeis teriam","tenha tenhas tenha tenhamos tenhais tenham","tivesse tivesses tivesse tivéssemos tivésseis tivessem","tiver tiveres tiver tivermos tiverdes tiverem"],
 haver:["hei hás há havemos/hemos haveis/heis hão","houve houveste houve houvemos houvestes houveram","havia havias havia havíamos havíeis haviam","houvera houveras houvera houvéramos houvéreis houveram","haverei haverás haverá haveremos havereis haverão","haveria haverias haveria haveríamos haveríeis haveriam","haja hajas haja hajamos hajais hajam","houvesse houvesses houvesse houvéssemos houvésseis houvessem","houver houveres houver houvermos houverdes houverem"],
 "pôr":["ponho pões põe pomos pondes põem","pus puseste pôs pusemos pusestes puseram","punha punhas punha púnhamos púnheis punham","pusera puseras pusera puséramos puséreis puseram","porei porás porá poremos poreis porão","poria porias poria poríamos poríeis poriam","ponha ponhas ponha ponhamos ponhais ponham","pusesse pusesses pusesse puséssemos pusésseis pusessem","puser puseres puser pusermos puserdes puserem"],
-ir:["vou vais vai vamos ides vão","fui foste foi fomos fostes foram","ia ias ia íamos íeis iam","fora foras fora fôramos fôreis foram","irei irás irá iremos ireis irão","iria irias iria iríamos iríeis iriam","vá vás vá vamos vades vão","fosse fosses fosse fôssemos fôsseis fossem","for fores for formos fordes forem"]
+ir:["vou vais vai vamos ides vão","fui foste foi fomos fostes foram","ia ias ia íamos íeis iam","fora foras fora fôramos fôreis foram","irei irás irá iremos ireis irão","iria irias iria iríamos iríeis iriam","vá vás vá vamos vades vão","fosse fosses fosse fôssemos fôsseis fossem","for fores for formos fordes forem"],
+"fazer":["faço fazes faz fazemos fazeis fazem", "fiz fizeste fez fizemos fizestes fizeram", "fazia fazias fazia fazíamos fazíeis faziam", "fizera fizeras fizera fizéramos fizéreis fizeram", "farei farás fará faremos fareis farão", "faria farias faria faríamos faríeis fariam", "faça faças faça façamos façais façam", "fizesse fizesses fizesse fizéssemos fizésseis fizessem", "fizer fizeres fizer fizermos fizerdes fizerem"],
+"dizer":["digo dizes diz dizemos dizeis dizem", "disse disseste disse dissemos dissestes disseram", "dizia dizias dizia dizíamos dizíeis diziam", "dissera disseras dissera disséramos disséreis disseram", "direi dirás dirá diremos direis dirão", "diria dirias diria diríamos diríeis diriam", "diga digas diga digamos digais digam", "dissesse dissesses dissesse disséssemos dissésseis dissessem", "disser disseres disser dissermos disserdes disserem"],
+"dar":["dou dás dá damos dais dão", "dei deste deu demos destes deram", "dava davas dava dávamos dáveis davam", "dera deras dera déramos déreis deram", "darei darás dará daremos dareis darão", "daria darias daria daríamos daríeis dariam", "dê dês dê demos deis deem", "desse desses desse déssemos désseis dessem", "der deres der dermos derdes derem"],
+"ver":["vejo vês vê vemos vedes veem", "vi viste viu vimos vistes viram", "via vias via víamos víeis viam", "vira viras vira víramos víreis viram", "verei verás verá veremos vereis verão", "veria verias veria veríamos veríeis veriam", "veja vejas veja vejamos vejais vejam", "visse visses visse víssemos vísseis vissem", "vir vires vir virmos virdes virem"],
+"vir":["venho vens vem vimos vindes vêm", "vim vieste veio viemos viestes vieram", "vinha vinhas vinha vínhamos vínheis vinham", "viera vieras viera viéramos viéreis vieram", "virei virás virá viremos vireis virão", "viria virias viria viríamos viríeis viriam", "venha venhas venha venhamos venhais venham", "viesse viesses viesse viéssemos viésseis viessem", "vier vieres vier viermos vierdes vierem"],
+"poder":["posso podes pode podemos podeis podem", "pude pudeste pôde pudemos pudestes puderam", "podia podias podia podíamos podíeis podiam", "pudera puderas pudera pudéramos pudéreis puderam", "poderei poderás poderá poderemos podereis poderão", "poderia poderias poderia poderíamos poderíeis poderiam", "possa possas possa possamos possais possam", "pudesse pudesses pudesse pudéssemos pudésseis pudessem", "puder puderes puder pudermos puderdes puderem"],
+"querer":["quero queres quer queremos quereis querem", "quis quiseste quis quisemos quisestes quiseram", "queria querias queria queríamos queríeis queriam", "quisera quiseras quisera quiséramos quiséreis quiseram", "quererei quererás quererá quereremos querereis quererão", "quereria quererias quereria quereríamos quereríeis quereriam", "queira queiras queira queiramos queirais queiram", "quisesse quisesses quisesse quiséssemos quisésseis quisessem", "quiser quiseres quiser quisermos quiserdes quiserem"],
+"saber":["sei sabes sabe sabemos sabeis sabem", "soube soubeste soube soubemos soubestes souberam", "sabia sabias sabia sabíamos sabíeis sabiam", "soubera souberas soubera soubéramos soubéreis souberam", "saberei saberás saberá saberemos sabereis saberão", "saberia saberias saberia saberíamos saberíeis saberiam", "saiba saibas saiba saibamos saibais saibam", "soubesse soubesses soubesse soubéssemos soubésseis soubessem", "souber souberes souber soubermos souberdes souberem"],
+"trazer":["trago trazes traz trazemos trazeis trazem", "trouxe trouxeste trouxe trouxemos trouxestes trouxeram", "trazia trazias trazia trazíamos trazíeis traziam", "trouxera trouxeras trouxera trouxéramos trouxéreis trouxeram", "trarei trarás trará traremos trareis trarão", "traria trarias traria traríamos traríeis trariam", "traga tragas traga tragamos tragais tragam", "trouxesse trouxesses trouxesse trouxéssemos trouxésseis trouxessem", "trouxer trouxeres trouxer trouxermos trouxerdes trouxerem"],
+"ler":["leio lês lê lemos ledes leem", "li leste leu lemos lestes leram", "lia lias lia líamos líeis liam", "lera leras lera lêramos lêreis leram", "lerei lerás lerá leremos lereis lerão", "leria lerias leria leríamos leríeis leriam", "leia leias leia leiamos leiais leiam", "lesse lesses lesse lêssemos lêsseis lessem", "ler leres ler lermos lerdes lerem"],
+"sair":["saio sais sai saímos saís saem", "saí saíste saiu saímos saístes saíram", "saía saías saía saíamos saíeis saíam", "saíra saíras saíra saíramos saíreis saíram", "sairei sairás sairá sairemos saireis sairão", "sairia sairias sairia sairíamos sairíeis sairiam", "saia saias saia saiamos saiais saiam", "saísse saísses saísse saíssemos saísseis saíssem", "sair saíres sair sairmos sairdes saírem"],
+"ouvir":["ouço ouves ouve ouvimos ouvis ouvem", "ouvi ouviste ouviu ouvimos ouvistes ouviram", "ouvia ouvias ouvia ouvíamos ouvíeis ouviam", "ouvira ouviras ouvira ouvíramos ouvíreis ouviram", "ouvirei ouvirás ouvirá ouviremos ouvireis ouvirão", "ouviria ouvirias ouviria ouviríamos ouviríeis ouviriam", "ouça ouças ouça ouçamos ouçais ouçam", "ouvisse ouvisses ouvisse ouvíssemos ouvísseis ouvissem", "ouvir ouvires ouvir ouvirmos ouvirdes ouvirem"],
+"pedir":["peço pedes pede pedimos pedis pedem", "pedi pediste pediu pedimos pedistes pediram", "pedia pedias pedia pedíamos pedíeis pediam", "pedira pediras pedira pedíramos pedíreis pediram", "pedirei pedirás pedirá pediremos pedireis pedirão", "pediria pedirias pediria pediríamos pediríeis pediriam", "peça peças peça peçamos peçais peçam", "pedisse pedisses pedisse pedíssemos pedísseis pedissem", "pedir pedires pedir pedirmos pedirdes pedirem"],
+"dormir":["durmo dormes dorme dormimos dormis dormem", "dormi dormiste dormiu dormimos dormistes dormiram", "dormia dormias dormia dormíamos dormíeis dormiam", "dormira dormiras dormira dormíramos dormíreis dormiram", "dormirei dormirás dormirá dormiremos dormireis dormirão", "dormiria dormirias dormiria dormiríamos dormiríeis dormiriam", "durma durmas durma durmamos durmais durmam", "dormisse dormisses dormisse dormíssemos dormísseis dormissem", "dormir dormires dormir dormirmos dormirdes dormirem"]
 };
 
 const $=id=>document.getElementById(id);
@@ -251,7 +262,18 @@ function info(g){
   return Object.values(k).map(x=>x.v+", "+T[x.t].toLowerCase()+", "+pers(x.ps)).join("; ");
 }
 const REG=["cantar","comer","abrir"];
-let n=20,kind="both",q=[],i=0,score=0,miss=[],phase="";
+let n=20,q=[],i=0,score=0,miss=[],phase="";
+const GR={reg:["cantar","comer","abrir"],ess:["ser","estar","ter","haver","pôr","ir"],fre:["fazer", "dizer", "dar", "ver", "vir", "poder", "querer", "saber"],com:["trazer", "ler", "sair", "ouvir", "pedir", "dormir"]};
+const GL={reg:"Regulares",ess:"Essenciais",fre:"Frequentes",com:"Complementares"};
+const GRP={};for(const g in GR)GR[g].forEach(v=>{GRP[v]=g;});
+const GK=Object.keys(GL);let kinds=["reg","ess"];
+function paintK(){[...$("kinds").children].forEach((b,k)=>{const on=kinds.includes(GK[k]);b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on));});}
+GK.forEach(g=>{
+  const b=document.createElement("button");b.textContent=GL[g];
+  b.onclick=()=>{const on=kinds.includes(g);if(on&&kinds.length===1)return;kinds=on?kinds.filter(x=>x!==g):kinds.concat(g);paintK();};
+  $("kinds").appendChild(b);
+});
+paintK();
 
 let cur="setup";
 function view(){
@@ -274,13 +296,11 @@ function seg(id,fn){
   });
 }
 seg("seg",v=>{n=+v;});
-seg("kind",v=>{kind=v;});
 
 function start(){
   const vos=$("vos").checked,syn=$("syn").checked,pool=[];
   for(const v in D){
-    if(kind==="regular"&&!REG.includes(v))continue;
-    if(kind==="irregular"&&REG.includes(v))continue;
+    if(!kinds.includes(GRP[v]))continue;
     D[v].forEach((s,t)=>{
       if(syn&&(t===4||t===5))return;
       s.split(" ").forEach((f,p)=>{
@@ -362,9 +382,23 @@ estar:["estoy estás está estamos estáis están","estuve estuviste estuvo estu
 ter:["tengo tienes tiene tenemos tenéis tienen","tuve tuviste tuvo tuvimos tuvisteis tuvieron","tenía tenías tenía teníamos teníais tenían","tenga tengas tenga tengamos tengáis tengan","tuviera tuvieras tuviera tuviéramos tuvierais tuvieran","tendr","tenido"],
 haver:["he has ha hemos habéis han","hube hubiste hubo hubimos hubisteis hubieron","había habías había habíamos habíais habían","haya hayas haya hayamos hayáis hayan","hubiera hubieras hubiera hubiéramos hubierais hubieran","habr","habido"],
 "pôr":["pongo pones pone ponemos ponéis ponen","puse pusiste puso pusimos pusisteis pusieron","ponía ponías ponía poníamos poníais ponían","ponga pongas ponga pongamos pongáis pongan","pusiera pusieras pusiera pusiéramos pusierais pusieran","pondr","puesto"],
-ir:["voy vas va vamos vais van","fui fuiste fue fuimos fuisteis fueron","iba ibas iba íbamos ibais iban","vaya vayas vaya vayamos vayáis vayan","fuera fueras fuera fuéramos fuerais fueran","ir","ido"]
+ir:["voy vas va vamos vais van","fui fuiste fue fuimos fuisteis fueron","iba ibas iba íbamos ibais iban","vaya vayas vaya vayamos vayáis vayan","fuera fueras fuera fuéramos fuerais fueran","ir","ido"],
+"fazer":["hago haces hace hacemos hacéis hacen", "hice hiciste hizo hicimos hicisteis hicieron", "hacía hacías hacía hacíamos hacíais hacían", "haga hagas haga hagamos hagáis hagan", "hiciera hicieras hiciera hiciéramos hicierais hicieran", "har", "hecho"],
+"dizer":["digo dices dice decimos decís dicen", "dije dijiste dijo dijimos dijisteis dijeron", "decía decías decía decíamos decíais decían", "diga digas diga digamos digáis digan", "dijera dijeras dijera dijéramos dijerais dijeran", "dir", "dicho"],
+"dar":["doy das da damos dais dan", "di diste dio dimos disteis dieron", "daba dabas daba dábamos dabais daban", "dé des dé demos deis den", "diera dieras diera diéramos dierais dieran", "dar", "dado"],
+"ver":["veo ves ve vemos veis ven", "vi viste vio vimos visteis vieron", "veía veías veía veíamos veíais veían", "vea veas vea veamos veáis vean", "viera vieras viera viéramos vierais vieran", "ver", "visto"],
+"vir":["vengo vienes viene venimos venís vienen", "vine viniste vino vinimos vinisteis vinieron", "venía venías venía veníamos veníais venían", "venga vengas venga vengamos vengáis vengan", "viniera vinieras viniera viniéramos vinierais vinieran", "vendr", "venido"],
+"poder":["puedo puedes puede podemos podéis pueden", "pude pudiste pudo pudimos pudisteis pudieron", "podía podías podía podíamos podíais podían", "pueda puedas pueda podamos podáis puedan", "pudiera pudieras pudiera pudiéramos pudierais pudieran", "podr", "podido"],
+"querer":["quiero quieres quiere queremos queréis quieren", "quise quisiste quiso quisimos quisisteis quisieron", "quería querías quería queríamos queríais querían", "quiera quieras quiera queramos queráis quieran", "quisiera quisieras quisiera quisiéramos quisierais quisieran", "querr", "querido"],
+"saber":["sé sabes sabe sabemos sabéis saben", "supe supiste supo supimos supisteis supieron", "sabía sabías sabía sabíamos sabíais sabían", "sepa sepas sepa sepamos sepáis sepan", "supiera supieras supiera supiéramos supierais supieran", "sabr", "sabido"],
+"trazer":["traigo traes trae traemos traéis traen", "traje trajiste trajo trajimos trajisteis trajeron", "traía traías traía traíamos traíais traían", "traiga traigas traiga traigamos traigáis traigan", "trajera trajeras trajera trajéramos trajerais trajeran", "traer", "traído"],
+"ler":["leo lees lee leemos leéis leen", "leí leíste leyó leímos leísteis leyeron", "leía leías leía leíamos leíais leían", "lea leas lea leamos leáis lean", "leyera leyeras leyera leyéramos leyerais leyeran", "leer", "leído"],
+"sair":["salgo sales sale salimos salís salen", "salí saliste salió salimos salisteis salieron", "salía salías salía salíamos salíais salían", "salga salgas salga salgamos salgáis salgan", "saliera salieras saliera saliéramos salierais salieran", "saldr", "salido"],
+"ouvir":["oigo oyes oye oímos oís oyen", "oí oíste oyó oímos oísteis oyeron", "oía oías oía oíamos oíais oían", "oiga oigas oiga oigamos oigáis oigan", "oyera oyeras oyera oyéramos oyerais oyeran", "oir", "oído"],
+"pedir":["pido pides pide pedimos pedís piden", "pedí pediste pidió pedimos pedisteis pidieron", "pedía pedías pedía pedíamos pedíais pedían", "pida pidas pida pidamos pidáis pidan", "pidiera pidieras pidiera pidiéramos pidierais pidieran", "pedir", "pedido"],
+"dormir":["duermo duermes duerme dormimos dormís duermen", "dormí dormiste durmió dormimos dormisteis durmieron", "dormía dormías dormía dormíamos dormíais dormían", "duerma duermas duerma durmamos durmáis duerman", "durmiera durmieras durmiera durmiéramos durmierais durmieran", "dormir", "dormido"]
 };
-const XI={ter:"tener",haver:"haber","pôr":"poner"};
+const XI={"ter": "tener", "haver": "haber", "pôr": "poner", "fazer": "hacer", "dizer": "decir", "vir": "venir", "trazer": "traer", "ler": "leer", "sair": "salir", "ouvir": "oír"};
 const AUX="había habías había habíamos habíais habían".split(" ");
 const FU="é ás á emos éis án".split(" "),CO="ía ías ía íamos íais ían".split(" ");
 const seRa=w=>w.replace(/ramos$/,"semos").replace(/rais$/,"seis").replace(/ras$/,"ses").replace(/ran$/,"sen").replace(/ra$/,"se");
@@ -381,7 +415,8 @@ const es=(v,t)=>{
 let sel=["cantar"];
 function buildTable(){
   const keys=Object.keys(D),c=$("vchips");
-  if(!c.children.length)keys.forEach(v=>{
+  if(!c.children.length)keys.forEach((v,k)=>{
+    if(k===0||GRP[v]!==GRP[keys[k-1]]){const l=document.createElement("span");l.className="gl";l.textContent=GL[GRP[v]];c.appendChild(l);}
     const b=document.createElement("button");
     b.textContent=v+(XI[v]?" / "+XI[v]:"");
     b.onclick=()=>{
@@ -390,10 +425,11 @@ function buildTable(){
     };
     c.appendChild(b);
   });
+  const bs=c.querySelectorAll("button");
   keys.forEach((v,k)=>{
     const on=sel.includes(v);
-    c.children[k].classList.toggle("on",on);
-    c.children[k].setAttribute("aria-pressed",String(on));
+    bs[k].classList.toggle("on",on);
+    bs[k].setAttribute("aria-pressed",String(on));
   });
   const vs=keys.filter(v=>sel.includes(v)),tab=$("tbl");
   tab.textContent="";tab.style.minWidth=(70+vs.length*280)+"px";
