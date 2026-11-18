@@ -1,4 +1,4 @@
-# Treino de Verbos Portugueses 🍪
+# Treino de Verbos Portugueses 🐟
 
 A single-page European Portuguese verb conjugation trainer.
 
