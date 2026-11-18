@@ -1,14 +1,10 @@
 # Piotrek's Polyverb Tincture
 
-Uma tintura de verbos, preparada em casa. Treinos de conjugação verbal, cada um numa só página.
+Treinos de conjugação verbal, cada um numa só página.
 
-- [`portuguese/`](portuguese/): verbos do português europeu, com comparação com o espanhol
-- [`polish/`](polish/): verbos regulares polacos
+- **Português europeu** ([`portuguese/`](portuguese/)): nove tempos do indicativo, condicional e conjuntivo, incluindo o futuro do conjuntivo. Verbos regulares e irregulares, formas de *vós* opcionais e tabelas de verbos com comparação com o espanhol.
+- **Polaco** ([`polish/`](polish/)): verbos regulares em -ać, -ować e -ić/-yć no presente, no passado, no futuro e no condicional, com as formas de cada género.
 
-## Modo de usar
+## Como usar
 
-Não é preciso instalar nem compilar nada: abre o `index.html` num browser e escolhe uma língua, ou abre diretamente o `index.html` de um dos treinos.
-
-## Posologia
-
-Uma ronda de 20 formas por dia, de preferência com um café. Em caso de *mais-que-perfeito*, repetir a dose.
+Não é preciso instalar nada: abre o `index.html` num browser e escolhe uma língua.
