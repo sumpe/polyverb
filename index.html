@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Conjugames</title>
+<style>
+:root{
+  --bg:#f4f5f7;--card:#ffffff;--text:#15181d;--muted:#5d6570;--line:#d6dae0;--accent:#2b4fd8;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101215;--card:#1a1d22;--text:#e9ecf0;--muted:#9aa3ae;--line:#2e333a;--accent:#8aa4ff;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101215;--card:#1a1d22;--text:#e9ecf0;--muted:#9aa3ae;--line:#2e333a;--accent:#8aa4ff;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:520px;margin:0 auto;padding:48px 16px}
+h1{font:600 2rem/1.2 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 28px}
+a.game{display:flex;align-items:center;gap:16px;padding:18px 20px;margin-bottom:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;color:inherit;text-decoration:none}
+a.game:hover{border-color:var(--accent)}
+a.game:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.flag{flex:none;width:44px;height:30px;border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.pt{background:linear-gradient(90deg,#046a38 40%,#da291c 40%)}
+.pl{background:linear-gradient(#fff 50%,#dc143c 50%)}
+.name{font-weight:600;font-size:1.1rem}
+.desc{color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+  <h1>Conjugames</h1>
+  <p class="sub">Verb conjugation trainers.</p>
+  <a class="game" href="portuguese/">
+    <span class="flag pt" aria-hidden="true"></span>
+    <span><span class="name">Português</span><br><span class="desc">European Portuguese verbs, nine tenses</span></span>
+  </a>
+  <a class="game" href="polish/">
+    <span class="flag pl" aria-hidden="true"></span>
+    <span><span class="name">Polski</span><br><span class="desc">Polish regular verbs, present, past, future, conditional</span></span>
+  </a>
+</main>
+</body>
+</html>
