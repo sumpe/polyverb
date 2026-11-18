@@ -120,6 +120,12 @@ table{border:0}
 .who{margin:8px 0 12px}
 .tense.sj{background:#ffe000;border-color:#ffe000;color:#3b3000}
 .tg.sj td{border-left-color:#f2c200}
+.tline{display:block;width:52px;height:14px;margin:0 auto 8px;overflow:visible}
+.tline .b{stroke:var(--line);stroke-width:2;stroke-linecap:round}
+.tline .n{stroke:var(--muted);stroke-width:1.5;stroke-linecap:round}
+.tline .m{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tline .d{fill:var(--accent)}
+.tline .dash{stroke-dasharray:3 3}
 .pgrid{display:grid;grid-template-columns:repeat(2,26px);grid-auto-rows:19px;width:max-content;margin:0 auto 22px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .pgrid i{position:relative;border:0 solid var(--line)}
 .pgrid i:nth-child(odd){border-right-width:1px}
@@ -177,6 +183,7 @@ main.wide{max-width:1100px}
     <div class="verb" id="verb"></div>
     <div class="tense" id="tense"></div>
     <div class="who" id="who"></div>
+    <svg class="tline" id="tline" viewBox="0 0 52 14" aria-hidden="true"></svg>
     <div class="pgrid" id="pgrid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <input id="ans" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="A tua resposta">
     <div id="fb" class="fb" hidden></div>
@@ -323,6 +330,15 @@ function start(){
   show("quiz");render();
 }
 
+const TLM={
+  pres:'<circle class="d" cx="26" cy="7" r="3.5"/>',
+  past:'<path class="m" d="M26 7H6M11 2.5 6 7l5 4.5"/>',
+  plup:'<path class="m" d="M26 7H4M9 2.5 4 7l5 4.5M15 2.5 10 7l5 4.5"/>',
+  fut:'<path class="m" d="M26 7H46M41 2.5 46 7l-5 4.5"/>',
+  cond:'<path class="m dash" d="M26 7H43"/><path class="m" d="M41 2.5 46 7l-5 4.5"/>'
+};
+const tline=k=>'<line class="b" x1="2" y1="7" x2="50" y2="7"/><line class="n" x1="26" y1="2" x2="26" y2="12"/>'+TLM[k];
+const TK=["pres","past","past","plup","fut","cond","pres","past","fut"];
 function render(){
   const c=q[i];phase="ask";
   $("prog").textContent="Pergunta "+(i+1)+" de "+q.length;
@@ -332,6 +348,7 @@ function render(){
   $("tense").textContent=T[c.t];
   $("tense").className="tense"+(c.t>5?" sj":"");
   $("who").textContent=P[c.p][0]+" ("+P[c.p][1]+")";
+  $("tline").innerHTML=tline(TK[c.t]);
   [...$("pgrid").children].forEach((d,k)=>d.classList.toggle("on",k===(c.p%3)*2+(c.p>=3?1:0)));
   const a=$("ans");a.value="";a.readOnly=false;a.className="";
   $("fb").hidden=true;$("go").textContent="Verificar";
