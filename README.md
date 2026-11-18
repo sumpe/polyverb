@@ -1,4 +1,4 @@
-# Piotrek's Polyverb
+# Piotrek's Polyverb Tincture
 
 Single-page verb conjugation trainers.
 
