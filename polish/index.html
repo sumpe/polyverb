@@ -62,7 +62,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .verb{font:800 3.2rem/1 var(--f);letter-spacing:-.03em;text-align:center}
 .tense{display:table;margin:12px auto 0;padding:5px 16px;border:2px solid var(--accent);border-radius:999px;color:var(--accent);font-weight:700}
 .who{text-align:center;color:var(--muted);font-weight:600;margin:10px 0 12px;font-size:1.05rem}
-.tline{display:block;width:76px;height:20px;margin:2px auto 10px;overflow:visible}
+.tline{display:block;width:64px;height:17px;margin:2px auto 8px;overflow:visible}
 .tline .b{stroke:var(--line);stroke-width:2;stroke-linecap:round}
 .tline .n{stroke:var(--muted);stroke-width:1.5;stroke-linecap:round}
 .tline .m{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -97,11 +97,21 @@ td:not(:first-child){border-left:2px solid var(--line)}
 th:first-child,tbody tr:not(.tg) td:first-child{position:sticky;left:0;z-index:1;background:var(--card);color:var(--muted);max-width:170px}
 .tg td{font-weight:700;background:var(--bg);padding-top:12px;border-left:4px solid var(--accent)}
 .tl{display:inline-block;position:sticky;left:10px}
+body.play .hero{padding:18px 0 66px}
+body.play .hero h1{font-size:1.35rem}
+@media (min-width:600px){body.play .hero h1{padding-right:0}}
+body.play .hero::before{width:120px;height:120px;border-width:14px;right:-40px;top:-40px}
+body.play #sub{display:none}
+body.play .card{padding:20px}
+body.play .bar{margin-bottom:16px}
+body.play .who{margin:6px 0 8px}
+body.play .pgrid{margin-bottom:16px}
+body.play #go{margin-top:12px}
 </style>
 </head>
 <body>
 <header class="hero"><div class="in">
-  <h1>Trening polskich czasowników Petera 🥟</h1>
+  <h1>Trening polskich czasowników Petera&nbsp;🥟</h1>
   <p class="sub" id="sub">Czasowniki regularne. Wpisz formę; znaki diakrytyczne się liczą.</p>
 </div></header>
 <main>
@@ -237,7 +247,7 @@ const paintRep=toggles("vchips",REP,()=>sel.map(v=>REP.indexOf(v)),a=>{sel=a.sor
 function view(){
   const t=location.hash==="#tables";
   ["setup","quiz","done"].forEach(s=>$(s).hidden=t||s!==cur);
-  $("tables").hidden=!t;$("sub").hidden=t;
+  $("tables").hidden=!t;$("sub").hidden=t;document.body.classList.toggle("play",!t&&cur!=="setup");
   document.querySelector("main").classList.toggle("wide",t);
   if(t)buildTable();
   window.scrollTo(0,0);

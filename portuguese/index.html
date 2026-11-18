@@ -120,7 +120,7 @@ table{border:0}
 .who{margin:8px 0 12px}
 .tense.sj{background:#ffe000;border-color:#ffe000;color:#3b3000}
 .tg.sj td{border-left-color:#f2c200}
-.tline{display:block;width:76px;height:20px;margin:2px auto 10px;overflow:visible}
+.tline{display:block;width:64px;height:17px;margin:2px auto 8px;overflow:visible}
 .tline .b{stroke:var(--line);stroke-width:2;stroke-linecap:round}
 .tline .n{stroke:var(--muted);stroke-width:1.5;stroke-linecap:round}
 .tline .m{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -144,11 +144,21 @@ main.wide{max-width:1100px}
 .u.st{text-decoration-color:#3b82f6}
 .u.en{text-decoration-color:#ef4444}
 .u.ac{text-decoration-color:#a855f7;text-decoration-style:dotted}
+body.play .hero{padding:18px 0 66px}
+body.play .hero h1{font-size:1.35rem}
+@media (min-width:600px){body.play .hero h1{padding-right:0}}
+body.play .hero::before{width:120px;height:120px;border-width:14px;right:-40px;top:-40px}
+body.play #sub{display:none}
+body.play .card{padding:20px}
+body.play .bar{margin-bottom:16px}
+body.play .who{margin:6px 0 8px}
+body.play .pgrid{margin-bottom:16px}
+body.play #go{margin-top:12px}
 </style>
 </head>
 <body>
 <header class="hero"><div class="in">
-  <h1>Treino de Verbos Portugueses do Peter 🐟</h1>
+  <h1>Treino de Verbos Portugueses do Peter&nbsp;🐟</h1>
   <p class="sub" id="sub">Português europeu. Escreve a forma verbal; os acentos contam.</p>
 </div></header>
 <main>
@@ -292,7 +302,7 @@ let cur="setup";
 function view(){
   const t=location.hash==="#tables";
   ["setup","quiz","done"].forEach(s=>$(s).hidden=t||s!==cur);
-  $("tables").hidden=!t;$("sub").hidden=t;document.querySelector("main").classList.toggle("wide",t);
+  $("tables").hidden=!t;$("sub").hidden=t;document.body.classList.toggle("play",!t&&cur!=="setup");document.querySelector("main").classList.toggle("wide",t);
   if(t)buildTable();
   window.scrollTo(0,0);
 }
