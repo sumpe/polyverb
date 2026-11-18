@@ -1,4 +1,4 @@
-# Conjugames
+# Piotrek's Polyverb
 
 Single-page verb conjugation trainers.
 
