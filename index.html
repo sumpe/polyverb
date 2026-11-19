@@ -81,9 +81,7 @@
 body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 main{max-width:520px;margin:0 auto;padding:clamp(40px,10vh,88px) 20px 56px}
-.eyebrow{margin:0 0 12px;color:var(--muted);font:700 .72rem/1.2 var(--sans);letter-spacing:.12em;text-transform:uppercase}
 h1{margin:0;font:600 clamp(2.3rem,9vw,3rem)/1.05 var(--serif);letter-spacing:-.01em;text-wrap:balance}
-h1 em{font-weight:400;color:var(--accent)}
 .sub{margin:16px 0 0;max-width:34ch;color:var(--muted);font:italic 400 1.15rem/1.45 var(--serif)}
 .menu{margin:36px 0 0;padding:0;list-style:none;background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
 .menu li+li{border-top:1px solid var(--line)}
@@ -95,29 +93,24 @@ h1 em{font-weight:400;color:var(--accent)}
 .txt{flex:1;min-width:0}
 .name{display:block;font:600 1.35rem/1.2 var(--serif)}
 .desc{display:block;margin-top:3px;color:var(--muted);font-size:.9rem;line-height:1.4}
-.go{flex:none;color:var(--muted);font-size:1.1rem;transition:transform .15s,color .15s}
 @media (hover:hover){
   .menu a:hover{background:var(--hover)}
-  .menu a:hover .go{color:var(--accent);transform:translateX(3px)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <main>
-  <p class="eyebrow">Verb conjugation trainers</p>
-  <h1>Piotrek's <em>Polyverb</em> Tincture</h1>
+  <h1>Piotrek's Polyverb Tincture</h1>
   <p class="sub">A small dose of verbs.</p>
   <ul class="menu">
     <li><a href="portuguese/index.html">
       <span class="flag pt" aria-hidden="true"></span>
       <span class="txt"><span class="name">Português</span><span class="desc">European Portuguese verbs, nine tenses</span></span>
-      <span class="go" aria-hidden="true">→</span>
     </a></li>
     <li><a href="polish/index.html">
       <span class="flag pl" aria-hidden="true"></span>
       <span class="txt"><span class="name">Polski</span><span class="desc">Polish regular verbs, present, past, future, conditional</span></span>
-      <span class="go" aria-hidden="true">→</span>
     </a></li>
   </ul>
 </main>
