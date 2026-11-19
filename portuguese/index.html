@@ -139,11 +139,6 @@ tbody tr:not(.tg) td:first-child{position:sticky;left:0;z-index:1;background:var
 .tl{display:inline-block;position:sticky;left:10px}
 main.wide{max-width:1100px}
 .gl{flex:0 0 100%;font-size:.8rem;font-weight:700;color:var(--muted);margin-top:6px}
-.leg{font-size:.85rem;color:var(--muted);margin:0 0 12px}
-.u{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
-.u.st{text-decoration-color:#3b82f6}
-.u.en{text-decoration-color:#ef4444}
-.u.ac{text-decoration-color:#a855f7;text-decoration-style:dotted}
 body.play .hero{padding:18px 0 66px}
 body.play .hero h1{font-size:1.35rem}
 @media (min-width:600px){body.play .hero h1{padding-right:0}}
@@ -214,7 +209,6 @@ body.play #go{margin-top:12px}
     <h2>Tabelas de verbos</h2>
     <p class="sub">Escolhe um ou mais verbos. Português europeu (PE) primeiro, espanhol (ES) depois.</p>
     <div class="seg chips" id="vchips"></div>
-    <p class="leg">Nos verbos irregulares, sublinhado em relação ao verbo regular do mesmo tipo: <span class="u st">azul</span> = radical irregular; <span class="u en">vermelho</span> = terminação irregular (um traço vermelho no fim indica que falta a terminação regular, como em <i>faz</i>); <span class="u ac">roxo ponteado</span> = só o acento muda.</p>
     <div class="tw"><table id="tbl"></table></div>
     <p class="hint">O mais-que-perfeito simples português não tem equivalente em espanhol, que usa «había cantado». O imperfeito do conjuntivo espanhol tem duas formas (-ra / -se). O futuro do conjuntivo espanhol é arcaico e quase só aparece em textos jurídicos e literários.</p>
     <a class="link" href="#game">Voltar ao jogo</a>
@@ -445,57 +439,6 @@ const es=(v,t)=>{
   const s=e[{0:0,1:1,2:2,6:3,7:4}[t]].split(" ");
   return t===7?s.map(w=>w+" / "+seRa(w)):s;
 };
-const REFI={"pôr":"poer"};
-const dac=x=>x.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-function cls(f,r,b){
-  const n=f.length,m=r.length,bf=dac(f),br=dac(r),c=Array(n).fill(""),R={c:c,tail:false};
-  if(f===r)return R;
-  let p=0;while(p<n&&p<m&&bf[p]===br[p])p++;
-  let s=0;while(s<n-p&&s<m-p&&bf[n-1-s]===br[m-1-s])s++;
-  for(let i=0;i<p;i++)if(f[i]!==r[i])c[i]="ac";
-  for(let j=0;j<s;j++)if(f[n-1-j]!==r[m-1-j])c[n-1-j]="ac";
-  const mid=n-p-s;
-  if(mid<=0){if(n>=m)return R;if(p<b){if(n)c[Math.min(p,n-1)]="st";}else R.tail=true;return R;}
-  const e=(s===0&&s<m-b&&/[aeiouáéíóúâêôãõàü]/.test(f[n-1]))?1:0;
-  for(let i=p;i<n-s;i++)c[i]=i>=n-s-e?"en":"st";
-  return R;
-}
-const ESE={
-ar:["o as a amos áis an","é aste ó amos asteis aron","aba abas aba ábamos abais aban",0,0,0,"e es e emos éis en","ara aras ara áramos arais aran"],
-er:["o es e emos éis en","í iste ió imos isteis ieron","ía ías ía íamos íais ían",0,0,0,"a as a amos áis an","iera ieras iera iéramos ierais ieran"],
-ir:["o es e imos ís en","í iste ió imos isteis ieron","ía ías ía íamos íais ían",0,0,0,"a as a amos áis an","iera ieras iera iéramos ierais ieran"]
-};
-function esReg(inf,t){
-  const k=dac(inf).slice(-2),s=inf.slice(0,-2);
-  if(t===3)return AUX.map(a=>a+" "+s+(k==="ar"?"ado":"ido"));
-  if(t===4)return FU.map(x=>inf+x);
-  if(t===5)return CO.map(x=>inf+x);
-  if(t===8)return esReg(inf,7).map(w=>reRa(w.split(" / ")[0]));
-  const w=ESE[k][t].split(" ").map(x=>s+x);
-  return t===7?w.map(x=>x+" / "+seRa(x)):w;
-}
-function mark(td,txt,v,t,p,lang){
-  if(GRP[v]==="reg"){td.textContent=txt;return;}
-  const parts=txt.split(" / ");
-  let refs,inf;
-  if(lang==="pt"){inf=REFI[v]||v;refs=[conj(inf)[t].split(" ")[p].split("/")[0]];}
-  else{inf=XI[v]||v;refs=esReg(inf,t)[p].split(" / ");}
-  parts.forEach((f,k)=>{
-    if(k)td.appendChild(document.createTextNode(" / "));
-    if(k>=refs.length){td.appendChild(document.createTextNode(f));return;}
-    const r=refs[k];
-    const b=t===3&&lang==="es"?r.indexOf(" ")+1+inf.length-2:(t===4||t===5||(t===8&&lang==="pt")?inf.length:inf.length-2);
-    const R=cls(f,r,b);let i=0;
-    while(i<f.length){
-      let j=i;while(j<f.length&&R.c[j]===R.c[i])j++;
-      const seg=f.slice(i,j);
-      if(R.c[i]){const sp=document.createElement("span");sp.className="u "+R.c[i];sp.textContent=seg;td.appendChild(sp);}
-      else td.appendChild(document.createTextNode(seg));
-      i=j;
-    }
-    if(R.tail){const sp=document.createElement("span");sp.className="u en";sp.textContent="\u2002";td.appendChild(sp);}
-  });
-}
 let sel=["cantar"];
 function buildTable(){
   const keys=Object.keys(D),c=$("vchips");
@@ -532,13 +475,13 @@ function buildTable(){
     const g=tb.insertRow();g.className="tg"+(ti>5?" sj":"");
     const gc=g.insertCell();gc.colSpan=1+vs.length*2;
     const sp=document.createElement("span");sp.className="tl";sp.textContent=name;gc.appendChild(sp);
-    const cols=vs.map(v=>[D[v][ti].split(" "),es(v,ti),v]);
+    const cols=vs.map(v=>[D[v][ti].split(" "),es(v,ti)]);
     for(let p=0;p<6;p++){
       const r=tb.insertRow();
       r.insertCell().textContent=P[p][1];
       cols.forEach(cc=>{
-        const a=r.insertCell();a.className="pt";mark(a,cc[0][p].replace("/"," / "),cc[2],ti,p,"pt");
-        const b=r.insertCell();b.className="es";mark(b,cc[1][p],cc[2],ti,p,"es");
+        const a=r.insertCell();a.className="pt";a.textContent=cc[0][p].replace("/"," / ");
+        const b=r.insertCell();b.className="es";b.textContent=cc[1][p];
       });
     }
   });
