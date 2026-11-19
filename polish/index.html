@@ -223,6 +223,10 @@ body.play #go{margin-top:12px}
 
 /* Polish specifics: long person labels wrap */
 tbody tr:not(.tg) td:first-child{max-width:170px;white-space:normal}
+/* Footer: a hairline the width of the text column, then the credit */
+.foot{width:calc(100% - 40px);max-width:500px;margin:0 auto;padding:18px 0 32px;border-top:1px solid var(--line);color:var(--muted);font-style:italic;font-size:.85rem;text-align:center}
+@media (max-width:400px){.foot{width:calc(100% - 32px)}}
+body.wide .foot{max-width:1060px}
 </style>
 </head>
 <body>
@@ -295,6 +299,7 @@ tbody tr:not(.tg) td:first-child{max-width:170px;white-space:normal}
     <a class="link back" href="#game">Wróć do gry</a>
   </section>
 </main>
+<footer class="foot">© 2026 Peter Sumbler</footer>
 
 <script>
 const T=["Czas teraźniejszy","Czas przeszły","Czas przyszły","Tryb przypuszczający"];

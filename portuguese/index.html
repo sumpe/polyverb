@@ -251,6 +251,10 @@ thead tr:first-child th{border-bottom:0;padding-bottom:2px}
 thead tr:nth-child(2) th{color:var(--muted);font-weight:400;font-style:italic;font-size:.9rem;text-align:center}
 th.pt,td.pt{background:var(--col-pt);border-left:1px solid var(--line)}
 th.es,td.es{background:var(--col-es)}
+/* Footer: a hairline the width of the text column, then the credit */
+.foot{width:calc(100% - 40px);max-width:500px;margin:0 auto;padding:18px 0 32px;border-top:1px solid var(--line);color:var(--muted);font-style:italic;font-size:.85rem;text-align:center}
+@media (max-width:400px){.foot{width:calc(100% - 32px)}}
+body.wide .foot{max-width:1060px}
 </style>
 </head>
 <body>
@@ -327,6 +331,7 @@ th.es,td.es{background:var(--col-es)}
     <a class="link back" href="#game">Voltar ao jogo</a>
   </section>
 </main>
+<footer class="foot">© 2026 Peter Sumbler</footer>
 
 <script>
 const T=["Presente do indicativo","Pretérito perfeito","Pretérito imperfeito","Mais-que-perfeito simples","Futuro","Condicional","Presente do conjuntivo","Pretérito imperfeito do conjuntivo","Futuro do conjuntivo"];
