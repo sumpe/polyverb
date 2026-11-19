@@ -165,7 +165,9 @@ body.wide .nav .in,body.wide .mast .in,body.wide main{max-width:1100px}
 #ans:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--ring)}
 #ans.ok{border-color:var(--ok);background:var(--okbg);box-shadow:none}
 #ans.bad{border-color:var(--bad);background:var(--badbg);box-shadow:none}
-.fb{margin:12px 0 0;padding:10px 14px;border-radius:6px;font-size:1rem;line-height:1.45;text-align:center;white-space:pre-line}
+.fb{margin:12px 0 0;padding:10px 14px 11px;border-radius:6px;font-size:1rem;line-height:1.4;text-align:center}
+.fb .fa{color:var(--ink);font-weight:600;font-size:1.22rem}
+.fb .k{display:block;margin-top:3px;color:var(--muted);font-style:italic;font-size:.9rem}
 .fb.ok{background:var(--okbg);color:var(--ok)}
 .fb.bad{background:var(--badbg);color:var(--bad)}
 #go{margin-top:16px}
@@ -174,9 +176,22 @@ body.wide .nav .in,body.wide .mast .in,body.wide main{max-width:1100px}
 #done{padding-top:14px}
 #res{font-weight:400;font-size:clamp(3.4rem,15vw,4.4rem);line-height:1;letter-spacing:-.01em;color:var(--accent);font-variant-numeric:lining-nums}
 #pct{margin:8px 0 28px;color:var(--muted);font-style:italic}
-#misshead{margin:0;color:var(--muted);font-style:italic}
-#miss{margin:6px 0 28px;padding:0;list-style:none;border-top:1px solid var(--line);font-size:.97rem;line-height:1.45}
-#miss li{padding:10px 0;border-bottom:1px solid var(--line)}
+#misshead{margin:0 0 14px;color:var(--muted);font-style:italic}
+/* Review: each miss is the question, then what you wrote beside the answer.
+   Struck through means the word doesn't exist; unstruck with a note means it's a
+   real form, just not the one asked for. */
+#miss{width:100%;margin:0 0 32px;border-collapse:collapse;table-layout:fixed;background:none;font-size:1rem;line-height:1.3}
+#miss th,#miss td{position:static;max-width:none;padding:0 14px 0 0;background:none;color:inherit;font-style:normal;font-weight:400;white-space:normal;overflow-wrap:anywhere;text-align:left;vertical-align:baseline;border:0}
+#miss th:last-child,#miss td:last-child{padding-right:0}
+#miss thead th{width:50%;padding-bottom:6px;color:var(--muted);font-style:italic;font-size:.9rem;border-bottom:1px solid var(--edge)}
+#miss tbody th{padding-top:13px}
+#miss td{padding-top:4px;padding-bottom:13px;border-bottom:1px solid var(--line)}
+#miss .v,#miss .yes{font-weight:600}
+#miss .no{color:var(--bad);text-decoration:line-through;text-decoration-thickness:1px}
+#miss .real .no{text-decoration:none}
+#miss .k{display:block;margin-top:2px;color:var(--muted);font-style:italic;font-size:.86rem}
+#miss th .k{display:inline;margin:0 0 0 .4em;font-size:.9rem}
+.or{color:var(--muted);font-style:italic;font-weight:400}
 
 /* Tables */
 #tbl-view .sub{margin:0 0 18px}
@@ -297,7 +312,9 @@ th.es,td.es{background:var(--col-es)}
     <div id="res"></div>
     <div id="pct"></div>
     <p id="misshead">Para rever</p>
-    <ul id="miss"></ul>
+    <table id="miss">
+      <thead><tr><th scope="col">Escreveste</th><th scope="col">Resposta</th></tr></thead>
+    </table>
     <button class="primary" id="again">Jogar outra vez</button>
     <button class="ghost" id="change">Alterar opções</button>
   </section>
@@ -363,17 +380,19 @@ const shuf=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math
 const ALLV=Object.assign({},D);
 for(const c in REGV)REGV[c].forEach(v=>{if(!ALLV[v])ALLV[v]=conj(v);});
 for(const v in ALLV)ALLV[v].forEach((s,t)=>s.split(" ").forEach((f,p)=>f.split("/").forEach(x=>{const k=norm(x);(IDX[k]=IDX[k]||[]).push({v:v,t:t,p:p});})));
-const ORD=["1.ª","2.ª","3.ª"];
-function pers(ps){
-  const s=ps.filter(p=>p<3).map(p=>ORD[p]),pl=ps.filter(p=>p>=3).map(p=>ORD[p-3]);
-  return [s.length?s.join("/")+" sing.":"",pl.length?pl.join("/")+" pl.":""].filter(Boolean).join(" e ");
-}
-function info(g){
+const TS=["presente","perfeito","imperfeito","mais-que-perfeito","futuro","condicional","presente do conjuntivo","imperfeito do conjuntivo","futuro do conjuntivo"];
+const PS=["eu","tu","ele","nós","vós","eles"];
+// Where a wrong answer really belongs, e.g. "do imperfeito · eu, ele".
+// Forms of the verb that was asked win over look-alikes from other verbs.
+function info(g,c){
   const m=IDX[g];if(!m)return "";
   const k={};
   m.forEach(x=>{const key=x.v+"|"+x.t;(k[key]=k[key]||{v:x.v,t:x.t,ps:[]}).ps.push(x.p);});
-  return Object.values(k).map(x=>x.v+", "+T[x.t].toLowerCase()+", "+pers(x.ps)).join("; ");
+  let l=Object.values(k);const own=l.filter(x=>x.v===c.v);if(own.length)l=own;
+  return l.slice(0,2).map(x=>(x.v===c.v?"do ":"de "+x.v+", ")+TS[x.t]+" · "+x.ps.map(p=>PS[p]).join(", ")).join("; ");
 }
+const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;};
+const alts=(node,a)=>a.forEach((x,k)=>{if(k)node.append(" ",el("span","or","ou")," ");node.append(x);});
 const REG=["cantar","comer","abrir"];
 let n=20,q=[],i=0,score=0,miss=[],phase="";
 const GR={reg:["cantar","comer","abrir"],ess:["ser","estar","ter","haver","pôr","ir"],fre:["fazer", "dizer", "dar", "ver", "vir", "poder", "querer", "saber"],com:["trazer", "ler", "sair", "ouvir", "pedir", "dormir"]};
@@ -460,12 +479,19 @@ function go(){
   if(phase==="ask"){
     const a=$("ans"),c=q[i],g=norm(a.value);
     if(!g)return;
-    const ok=c.a.some(x=>norm(x)===g),inf=ok?"":info(g);
+    const ok=c.a.some(x=>norm(x)===g),inf=ok?"":info(g,c);
     if(ok)score++;else miss.push({c:c,g:a.value.trim(),inf:inf});
     a.readOnly=true;a.className=ok?"ok":"bad";
     const fb=$("fb");fb.hidden=false;fb.className="fb "+(ok?"ok":"bad");
     const others=c.a.filter(x=>norm(x)!==g);
-    fb.textContent=ok?"Correto"+(others.length?" (também aceite: "+others.join(", ")+")":""):"Resposta: "+c.a.join(" ou ")+(inf?"\n“"+a.value.trim()+"” é uma forma válida de: "+inf:"");
+    fb.textContent="";
+    if(ok){
+      fb.append("Correto");
+      if(others.length){const k=el("span","k","também ");alts(k,others);fb.append(k);}
+    }else{
+      const b=el("span","fa");alts(b,c.a);fb.append("Resposta ",b);
+      if(inf)fb.append(el("span","k","«"+a.value.trim()+"» é "+inf));
+    }
     $("score").textContent="Pontos "+score;
     $("fill").style.width=((i+1)/q.length*100)+"%";
     $("go").textContent=i===q.length-1?"Ver resultados":"Seguinte";
@@ -480,12 +506,15 @@ function finish(){
   show("done");
   $("res").textContent=score+" / "+q.length;
   $("pct").textContent=Math.round(score/q.length*100)+"% corretas"+(miss.length?"":", sem erros");
-  $("misshead").hidden=!miss.length;
-  const L=$("miss");L.textContent="";
+  $("misshead").hidden=$("miss").hidden=!miss.length;
+  const L=$("miss");[...L.tBodies].forEach(b=>b.remove());
   miss.forEach(m=>{
-    const li=document.createElement("li"),c=m.c;
-    li.textContent=c.v+", "+T[c.t].toLowerCase()+", "+P[c.p][0]+": escreveste “"+m.g+"”"+(m.inf?" ("+m.inf+")":"")+"; resposta: "+c.a.join(" ou ");
-    L.appendChild(li);
+    const c=m.c,b=L.createTBody(),h=el("th");
+    h.colSpan=2;h.scope="rowgroup";b.insertRow().append(h);
+    h.append(el("span","v",c.v),el("span","k",TS[c.t]+" · "+PS[c.p]));
+    const r=b.insertRow(),w=r.insertCell();w.append(el("span","no",m.g));
+    if(m.inf){w.className="real";w.append(el("span","k","é "+m.inf));}
+    const a=r.insertCell();a.className="yes";alts(a,c.a);
   });
 }
 
