@@ -2,12 +2,12 @@
    Each page adds its own accent colours in a <style> block after this file. */
 :root{
   --serif:"Iowan Old Style","Palatino Linotype","URW Palladio L",P052,Palatino,"Book Antiqua",Georgia,serif;
-  --paper:#ebe0cc;
-  --card:#f8f2e7;
-  --sunk:#e0d3bc;
+  --paper:#f7f3ec;
+  --card:#fdfbf7;
+  --sunk:#ece5d9;
   --ink:#2a1c13;
   --muted:#67503f;
-  --line:#d8c9b0;
+  --line:#e2d8c8;
   --edge:#8f7a63;
   --hover:rgba(42,28,19,.06);
   --focus:#2a1c13;

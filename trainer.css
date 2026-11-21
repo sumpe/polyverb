@@ -22,7 +22,8 @@ body.wide .nav .in,body.wide .mast .in,body.wide main{max-width:1100px}
 .seg button.on{background:var(--card);color:var(--accent);font-weight:600;box-shadow:0 0 0 1px var(--edge)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
 .chips button{flex:0 0 auto;min-height:44px;padding:8px 12px;border:1px solid var(--edge);border-radius:6px;background:transparent;transition:background-color .15s,border-color .15s,color .15s}
-.chips button.on{background:var(--fill);border-color:var(--fill);color:var(--on-fill)}
+/* Selected: a light tint of the page's accent, not a solid fill, so it doesn't outweigh the rest */
+.chips button.on{background:var(--tint);border-color:var(--accent);color:var(--accent);font-weight:600}
 .tight{margin-bottom:10px}
 .chips.four{display:grid;grid-template-columns:repeat(4,auto);justify-content:stretch}
 @media (max-width:560px){.chips.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
