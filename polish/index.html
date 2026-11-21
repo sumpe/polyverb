@@ -127,7 +127,9 @@ const lab=(p,g)=>p===2?["on","ona","ono"][g]:PR[p]+" ("+(p<2?["mężczyzna","kob
 const T_EN=["Present tense","Past tense","Future tense","Conditional mood"];
 const TS_EN=["Present","Past","Future","Conditional"];
 const PR_EN=["I","you","he / she / it","we","you all","they"];
-const labEn=(p,g)=>p===2?["he","she","it"][g]:PR_EN[p]+" ("+(p<2?["man","woman"][g]:["group with men","women only"][g])+")";
+// Grammatical gender: masculine / feminine in the singular; in the plural, masculine personal
+// (any group that includes a man) against non-masculine personal (everything else).
+const labEn=(p,g)=>p===2?["he","she","it"][g]:PR_EN[p]+" ("+(p<2?["masculine","feminine"][g]:["masculine personal","non-masculine personal"][g])+")";
 const V={
 ac:["czytać","pytać","słuchać","grać","czekać","szukać","kochać","pamiętać","wracać","sprzątać","odpowiadać","zaczynać","pomagać","otwierać","zamykać","mieszkać","śpiewać","wołać","oglądać","zapominać","powtarzać","używać"],
 ow:["kupować","pracować","gotować","rysować","planować","potrzebować","dziękować","pakować","parkować","rezerwować","studiować","malować","ratować","podróżować","spacerować","telefonować","organizować"],
