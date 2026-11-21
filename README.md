@@ -14,5 +14,6 @@ Não é preciso instalar nada: abre o `index.html` num browser e escolhe uma lí
 - `site.css`: as cores (claro e escuro), a tipografia, a barra de navegação e o rodapé, comuns às três páginas.
 - `trainer.css`: o que os dois treinos partilham (escolhas, cartão da pergunta, revisão, tabelas).
 - `portuguese/verbs.js`: os dados dos verbos portugueses e espanhóis.
+- `gloss.js`: mostra a tradução inglesa de um texto quando se passa o rato por cima (só com rato; nunca em ecrãs táteis).
 
 Cada página acrescenta as suas próprias cores num bloco `<style>`. Não há passo de compilação: os ficheiros são carregados com `<link>` e `<script src>` simples, por isso tudo funciona tanto aberto diretamente do disco como servido pelo GitHub Pages.

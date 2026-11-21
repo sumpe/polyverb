@@ -68,48 +68,50 @@ thead tr:first-child th{border-bottom:0;padding-bottom:2px}
 thead tr:nth-child(2) th{color:var(--muted);font-weight:400;font-style:italic;font-size:.9rem;text-align:center}
 th.pt,td.pt{background:var(--col-pt);border-left:1px solid var(--line)}
 th.es,td.es{background:var(--col-es)}
+.keys{--keys:12}
+@media (max-width:480px){.keys{--keys:6}}
 </style>
 </head>
 <body>
 <nav class="nav" aria-label="Polyverb"><div class="in">
   <a class="brand" href="../index.html">Polyverb</a>
   <div class="langs">
-    <a href="../portuguese/index.html" lang="pt-PT" aria-current="page"><span class="fl pt" aria-hidden="true"></span>Português</a>
-    <a href="../polish/index.html" lang="pl"><span class="fl pl" aria-hidden="true"></span>Polski</a>
+    <a href="../portuguese/index.html" lang="pt-PT" aria-current="page" data-en="Portuguese"><span class="fl pt" aria-hidden="true"></span>Português</a>
+    <a href="../polish/index.html" lang="pl" data-en="Polish"><span class="fl pl" aria-hidden="true"></span>Polski</a>
   </div>
 </div></nav>
 <header class="mast"><div class="in">
-  <h1>Treino de Verbos Portugueses&nbsp;🐟</h1>
-  <p class="sub" id="sub">Português europeu. Escreve a forma verbal; os acentos contam.</p>
+  <h1 data-en="Portuguese verb practice">Treino de Verbos Portugueses&nbsp;🐟</h1>
+  <p class="sub" id="sub" data-en="European Portuguese. Type the verb form; accents count.">Português europeu. Escreve a forma verbal; os acentos contam.</p>
   <nav class="tabs" aria-label="Secções">
-    <a href="#game" id="tab-game" aria-current="page">Treino</a>
-    <a href="#tables" id="tab-tables">Tabelas</a>
+    <a href="#game" id="tab-game" aria-current="page" data-en="Practice">Treino</a>
+    <a href="#tables" id="tab-tables" data-en="Tables">Tabelas</a>
   </nav>
 </div></header>
 <main>
 
   <section id="setup">
-    <span class="lbl" id="l-n">Número de formas</span>
+    <span class="lbl" id="l-n" data-en="Number of questions">Número de formas</span>
     <div class="seg" id="seg" role="group" aria-labelledby="l-n">
       <button data-v="10" aria-pressed="false">10</button>
       <button data-v="20" class="on" aria-pressed="true">20</button>
       <button data-v="30" aria-pressed="false">30</button>
     </div>
-    <span class="lbl" id="l-k">Verbos</span>
+    <span class="lbl" id="l-k" data-en="Verbs">Verbos</span>
     <div class="chips tight" id="kinds" role="group" aria-labelledby="l-k"></div>
-    <p class="hint">Regulares: muitos verbos em -ar, -er e -ir. Essenciais: ser, estar, ter, haver, pôr, ir. Frequentes: fazer, dizer, dar, ver, vir, poder, querer, saber. Complementares: trazer, ler, sair, ouvir, pedir, dormir.</p>
+    <p class="hint" data-en="Regular: many verbs in -ar, -er and -ir. Essential: ser, estar, ter, haver, pôr, ir. Common: fazer, dizer, dar, ver, vir, poder, querer, saber. Supplementary: trazer, ler, sair, ouvir, pedir, dormir.">Regulares: muitos verbos em -ar, -er e -ir. Essenciais: ser, estar, ter, haver, pôr, ir. Frequentes: fazer, dizer, dar, ver, vir, poder, querer, saber. Complementares: trazer, ler, sair, ouvir, pedir, dormir.</p>
     <label class="switch">
       <input type="checkbox" id="vos" checked>
       <span class="track"></span>
-      <span>Incluir formas de <i>vós</i> (2.ª pl.)</span>
+      <span data-en="Include the vós forms (2nd person plural)">Incluir formas de <i>vós</i> (2.ª pl.)</span>
     </label>
     <label class="switch">
       <input type="checkbox" id="syn">
       <span class="track"></span>
-      <span>Excluir o futuro e o condicional</span>
+      <span data-en="Leave out the future and the conditional">Excluir o futuro e o condicional</span>
     </label>
-    <button class="primary" id="start">Começar</button>
-    <a class="link" href="#tables">Ver as tabelas de verbos</a>
+    <button class="primary" id="start" data-en="Start">Começar</button>
+    <a class="link" href="#tables" data-en="See the verb tables">Ver as tabelas de verbos</a>
   </section>
 
   <section id="quiz" hidden>
@@ -121,6 +123,7 @@ th.es,td.es{background:var(--col-es)}
     <svg class="tline" id="tline" viewBox="0 0 52 14" aria-hidden="true"></svg>
     <div class="pgrid" id="pgrid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <input id="ans" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="A tua resposta">
+    <div class="keys" id="keys" role="group" aria-label="Letras com acento"></div>
     <div id="fb" class="fb" role="status" hidden></div>
     <button class="primary" id="go">Verificar</button>
   </section>
@@ -128,28 +131,32 @@ th.es,td.es{background:var(--col-es)}
   <section id="done" hidden>
     <div id="res"></div>
     <div id="pct"></div>
-    <p id="misshead">Para rever</p>
+    <p id="misshead" data-en="To review">Para rever</p>
     <table id="miss">
-      <thead><tr><th scope="col">Escreveste</th><th scope="col">Resposta</th></tr></thead>
+      <thead><tr><th scope="col" data-en="You wrote">Escreveste</th><th scope="col" data-en="Answer">Resposta</th></tr></thead>
     </table>
-    <button class="primary" id="again">Jogar outra vez</button>
-    <button class="ghost" id="change">Alterar opções</button>
+    <button class="primary" id="again" data-en="Play again">Jogar outra vez</button>
+    <button class="ghost" id="change" data-en="Change options">Alterar opções</button>
   </section>
 
   <section id="tbl-view" hidden>
-    <p class="sub">Escolhe um ou mais verbos. Português europeu (PE) primeiro, espanhol (ES) depois.</p>
+    <p class="sub" data-en="Choose one or more verbs. European Portuguese (PE) first, then Spanish (ES).">Escolhe um ou mais verbos. Português europeu (PE) primeiro, espanhol (ES) depois.</p>
     <div class="chips" id="vchips" role="group" aria-label="Verbos"></div>
     <div class="tw"><table id="tbl"></table></div>
-    <p class="hint">O mais-que-perfeito simples português não tem equivalente em espanhol, que usa «había cantado». O imperfeito do conjuntivo espanhol tem duas formas (-ra / -se). O futuro do conjuntivo espanhol é arcaico e quase só aparece em textos jurídicos e literários.</p>
-    <a class="link back" href="#game">Voltar ao jogo</a>
+    <p class="hint" data-en="The Portuguese simple pluperfect has no Spanish equivalent; Spanish uses «había cantado». The Spanish imperfect subjunctive has two forms (-ra / -se). The Spanish future subjunctive is archaic and appears almost only in legal and literary texts.">O mais-que-perfeito simples português não tem equivalente em espanhol, que usa «había cantado». O imperfeito do conjuntivo espanhol tem duas formas (-ra / -se). O futuro do conjuntivo espanhol é arcaico e quase só aparece em textos jurídicos e literários.</p>
+    <a class="link back" href="#game" data-en="Back to the game">Voltar ao jogo</a>
   </section>
 </main>
 <footer class="foot">By Peter S</footer>
 
+<script src="../gloss.js"></script>
 <script src="verbs.js"></script>
 <script>
 const T=["Presente do indicativo","Pretérito perfeito","Pretérito imperfeito","Mais-que-perfeito simples","Futuro","Condicional","Presente do conjuntivo","Pretérito imperfeito do conjuntivo","Futuro do conjuntivo"];
 const P=[["eu","1.ª sing."],["tu","2.ª sing."],["ele / ela","3.ª sing."],["nós","1.ª pl."],["vós","2.ª pl."],["eles / elas","3.ª pl."]];
+// English for the hover slips (gloss.js)
+const T_EN=["Present indicative","Preterite","Imperfect","Simple pluperfect","Future","Conditional","Present subjunctive","Imperfect subjunctive","Future subjunctive"];
+const P_EN=[["I","1st person singular"],["you","2nd person singular"],["he / she","3rd person singular"],["we","1st person plural"],["you all","2nd person plural"],["they","3rd person plural"]];
 
 const $=id=>document.getElementById(id);
 const norm=s=>s.trim().toLowerCase().normalize("NFC").replace(/\s+/g," ");
@@ -171,27 +178,50 @@ for(const c in REGV)REGV[c].forEach(v=>{if(!ALLV[v])ALLV[v]=conj(v);});
 for(const v in ALLV)ALLV[v].forEach((s,t)=>s.split(" ").forEach((f,p)=>f.split("/").forEach(x=>{const k=norm(x);(IDX[k]=IDX[k]||[]).push({v:v,t:t,p:p});})));
 const TS=["presente","perfeito","imperfeito","mais-que-perfeito","futuro","condicional","presente do conjuntivo","imperfeito do conjuntivo","futuro do conjuntivo"];
 const PS=["eu","tu","ele","nós","vós","eles"];
-// Where a wrong answer really belongs, e.g. "do imperfeito · eu, ele".
+const TS_EN=["present","preterite","imperfect","pluperfect","future","conditional","present subjunctive","imperfect subjunctive","future subjunctive"];
+const PS_EN=["I","you","he","we","you all","they"];
+// Where a wrong answer really belongs: up to two {verb, tense, persons}, or none.
 // Forms of the verb that was asked win over look-alikes from other verbs.
 function info(g,c){
-  const m=IDX[g];if(!m)return "";
+  const m=IDX[g];if(!m)return null;
   const k={};
   m.forEach(x=>{const key=x.v+"|"+x.t;(k[key]=k[key]||{v:x.v,t:x.t,ps:[]}).ps.push(x.p);});
   let l=Object.values(k);const own=l.filter(x=>x.v===c.v);if(own.length)l=own;
-  return l.slice(0,2).map(x=>(x.v===c.v?"do ":"de "+x.v+", ")+TS[x.t]+" · "+x.ps.map(p=>PS[p]).join(", ")).join("; ");
+  return l.slice(0,2).map(x=>({same:x.v===c.v,v:x.v,t:x.t,ps:x.ps}));
 }
+// ...said in Portuguese, e.g. "do imperfeito · eu, ele", and in English
+const infoPt=l=>l.map(x=>(x.same?"do ":"de "+x.v+", ")+TS[x.t]+" · "+x.ps.map(p=>PS[p]).join(", ")).join("; ");
+const infoEn=l=>l.map(x=>(x.same?"the ":"a form of "+x.v+" ("+GLOSS[x.v]+"), ")+TS_EN[x.t]+" · "+x.ps.map(p=>PS_EN[p]).join(", ")).join("; ");
 const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;};
+const en=(node,txt)=>{node.dataset.en=txt;return node;};
 const mood=(node,s)=>{node.textContent="";s.split(/(conjuntivo)/).forEach((x,k)=>{if(x)node.append(k%2?el("span","mood",x):x);});return node;};
-const alts=(node,a)=>a.forEach((x,k)=>{if(k)node.append(" ",el("span","or","ou")," ");node.append(x);});
+const alts=(node,a)=>a.forEach((x,k)=>{if(k)node.append(" ",en(el("span","or","ou"),"or")," ");node.append(x);});
+const KEYS="á à â ã é ê í ó ô õ ú ç".split(" ");
+// The letter keys under the answer: they type at the cursor and leave the focus in the answer box,
+// so a phone keyboard stays open.
+function typeKey(ch){
+  const a=$("ans");if(a.readOnly)return;
+  const s=a.selectionStart??a.value.length,e=a.selectionEnd??s;
+  a.setRangeText(ch,s,e,"end");a.focus();
+}
+KEYS.forEach(ch=>{
+  const b=el("button",null,ch);b.type="button";
+  b.addEventListener("mousedown",e=>e.preventDefault());
+  b.addEventListener("touchstart",e=>{e.preventDefault();typeKey(ch);},{passive:false});
+  b.onclick=()=>typeKey(ch);
+  $("keys").appendChild(b);
+});
+const keysOn=on=>[...$("keys").children].forEach(b=>{b.disabled=!on;});
 const REG=["cantar","comer","abrir"];
 let n=20,q=[],i=0,score=0,miss=[],phase="";
 const GR={reg:["cantar","comer","abrir"],ess:["ser","estar","ter","haver","pôr","ir"],fre:["fazer", "dizer", "dar", "ver", "vir", "poder", "querer", "saber"],com:["trazer", "ler", "sair", "ouvir", "pedir", "dormir"]};
 const GL={reg:"Regulares",ess:"Essenciais",fre:"Frequentes",com:"Complementares"};
+const GL_EN={reg:"Regular",ess:"Essential",fre:"Common",com:"Supplementary"};
 const GRP={};for(const g in GR)GR[g].forEach(v=>{GRP[v]=g;});
 const GK=Object.keys(GL);let kinds=["reg","ess"];
 function paintK(){[...$("kinds").children].forEach((b,k)=>{const on=kinds.includes(GK[k]);b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on));});}
 GK.forEach(g=>{
-  const b=document.createElement("button");b.textContent=GL[g];
+  const b=en(el("button",null,GL[g]),GL_EN[g]);
   b.onclick=()=>{const on=kinds.includes(g);if(on&&kinds.length===1)return;kinds=on?kinds.filter(x=>x!==g):kinds.concat(g);paintK();};
   $("kinds").appendChild(b);
 });
@@ -251,17 +281,17 @@ const tline=k=>'<line class="b" x1="2" y1="7" x2="50" y2="7"/><line class="n" x1
 const TK=["pres","past","past","plup","fut","cond","pres","past","fut"];
 function render(){
   const c=q[i];phase="ask";
-  $("prog").textContent="Pergunta "+(i+1)+" de "+q.length;
-  $("score").textContent="Pontos "+score;
+  en($("prog"),"Question "+(i+1)+" of "+q.length).textContent="Pergunta "+(i+1)+" de "+q.length;
+  en($("score"),"Score "+score).textContent="Pontos "+score;
   $("fill").style.width=(i/q.length*100)+"%";
-  $("verb").textContent=c.v;
-  mood($("tense"),T[c.t]);
+  en($("verb"),GLOSS[c.v]).textContent=c.v;
+  en(mood($("tense"),T[c.t]),T_EN[c.t]);
   $("tense").className="tense"+(c.t>5?" sj":"");
-  $("who").textContent=P[c.p][0]+" ("+P[c.p][1]+")";
+  en($("who"),P_EN[c.p][0]+" ("+P_EN[c.p][1]+")").textContent=P[c.p][0]+" ("+P[c.p][1]+")";
   $("tline").innerHTML=tline(TK[c.t]);
   [...$("pgrid").children].forEach((d,k)=>d.classList.toggle("on",k===(c.p%3)*2+(c.p>=3?1:0)));
-  const a=$("ans");a.value="";a.readOnly=false;a.className="";
-  $("fb").hidden=true;$("go").textContent="Verificar";
+  const a=$("ans");a.value="";a.readOnly=false;a.className="";keysOn(true);
+  $("fb").hidden=true;en($("go"),"Check").textContent="Verificar";
   a.focus();
 }
 
@@ -271,20 +301,20 @@ function go(){
     if(!g)return;
     const ok=c.a.some(x=>norm(x)===g),inf=ok?"":info(g,c);
     if(ok)score++;else miss.push({c:c,g:a.value.trim(),inf:inf});
-    a.readOnly=true;a.className=ok?"ok":"bad";
+    a.readOnly=true;a.className=ok?"ok":"bad";keysOn(false);
     const fb=$("fb");fb.hidden=false;fb.className="fb "+(ok?"ok":"bad");
     const others=c.a.filter(x=>norm(x)!==g);
     fb.textContent="";
     if(ok){
-      fb.append("Correto");
-      if(others.length){const k=el("span","k","também ");alts(k,others);fb.append(k);}
+      fb.append(en(el("span",null,"Correto"),"Correct"));
+      if(others.length){const k=en(el("span","k","também "),"also accepted: "+others.join(", "));alts(k,others);fb.append(k);}
     }else{
-      const b=el("span","fa");alts(b,c.a);fb.append("Resposta ",b);
-      if(inf)fb.append(mood(el("span","k"),"«"+a.value.trim()+"» é "+inf));
+      const b=el("span","fa");alts(b,c.a);fb.append(en(el("span",null,"Resposta"),"Answer")," ",b);
+      if(inf)fb.append(en(mood(el("span","k"),"«"+a.value.trim()+"» é "+infoPt(inf)),"«"+a.value.trim()+"» is "+infoEn(inf)));
     }
-    $("score").textContent="Pontos "+score;
+    en($("score"),"Score "+score).textContent="Pontos "+score;
     $("fill").style.width=((i+1)/q.length*100)+"%";
-    $("go").textContent=i===q.length-1?"Ver resultados":"Seguinte";
+    const last=i===q.length-1;en($("go"),last?"See results":"Next").textContent=last?"Ver resultados":"Seguinte";
     phase="review";
   }else{
     i++;
@@ -295,15 +325,16 @@ function go(){
 function finish(){
   show("done");
   $("res").textContent=score+" / "+q.length;
-  $("pct").textContent=Math.round(score/q.length*100)+"% corretas"+(miss.length?"":", sem erros");
+  const pc=Math.round(score/q.length*100);
+  en($("pct"),pc+"% correct"+(miss.length?"":", no mistakes")).textContent=pc+"% corretas"+(miss.length?"":", sem erros");
   $("misshead").hidden=$("miss").hidden=!miss.length;
   const L=$("miss");[...L.tBodies].forEach(b=>b.remove());
   miss.forEach(m=>{
     const c=m.c,b=L.createTBody(),h=el("th");
     h.colSpan=2;h.scope="rowgroup";b.insertRow().append(h);
-    h.append(el("span","v",c.v),mood(el("span","k"),TS[c.t]+" · "+PS[c.p]));
+    h.append(en(el("span","v",c.v),GLOSS[c.v]),en(mood(el("span","k"),TS[c.t]+" · "+PS[c.p]),TS_EN[c.t]+" · "+PS_EN[c.p]));
     const r=b.insertRow(),w=r.insertCell();w.append(el("span","no",m.g));
-    if(m.inf){w.className="real";w.append(mood(el("span","k"),"é "+m.inf));}
+    if(m.inf){w.className="real";w.append(en(mood(el("span","k"),"é "+infoPt(m.inf)),"is "+infoEn(m.inf)));}
     const a=r.insertCell();a.className="yes";alts(a,c.a);
   });
 }
@@ -333,7 +364,7 @@ let sel=["cantar"];
 function buildTable(){
   const keys=Object.keys(D),c=$("vchips");
   if(!c.children.length)keys.forEach((v,k)=>{
-    if(k===0||GRP[v]!==GRP[keys[k-1]]){const l=document.createElement("span");l.className="gl";l.textContent=GL[GRP[v]];c.appendChild(l);}
+    if(k===0||GRP[v]!==GRP[keys[k-1]]){c.appendChild(en(el("span","gl",GL[GRP[v]]),GL_EN[GRP[v]]));}
     const b=document.createElement("button");
     b.textContent=v+(XI[v]?" / "+XI[v]:"");
     b.onclick=()=>{
@@ -359,16 +390,17 @@ function buildTable(){
   vs.forEach(v=>{
     th(r1,v+(XI[v]?" / "+XI[v]:""),"vh",2);
     th(r2,"PE","pt");th(r2,"ES","es");
+    en(r2.cells[r2.cells.length-2],"European Portuguese");en(r2.cells[r2.cells.length-1],"Spanish");
   });
   const tb=tab.createTBody();
   T.forEach((name,ti)=>{
     const g=tb.insertRow();g.className="tg"+(ti>5?" sj":"");
     const gc=g.insertCell();gc.colSpan=1+vs.length*2;
-    gc.appendChild(mood(el("span","tl"),name));
+    gc.appendChild(en(mood(el("span","tl"),name),T_EN[ti]));
     const cols=vs.map(v=>[D[v][ti].split(" "),es(v,ti)]);
     for(let p=0;p<6;p++){
       const r=tb.insertRow();
-      r.insertCell().textContent=P[p][1];
+      en(r.insertCell(),P_EN[p][1]).textContent=P[p][1];
       cols.forEach(cc=>{
         const a=r.insertCell();a.className="pt";a.textContent=cc[0][p].replace("/"," / ");
         const b=r.insertCell();b.className="es";b.textContent=cc[1][p];

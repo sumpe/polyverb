@@ -40,6 +40,8 @@ body.wide .nav .in,body.wide .mast .in,body.wide main{max-width:1100px}
 .verb{font-weight:600;font-size:clamp(2.6rem,12vw,3.3rem);line-height:1.05;letter-spacing:-.015em;text-align:center;overflow-wrap:anywhere}
 .tense{margin:10px 0 0;color:var(--tag);font-style:italic;font-size:1.12rem;line-height:1.3;text-align:center}
 .who{margin:4px 0 10px;text-align:center;font-size:1.3rem;line-height:1.3}
+/* Verb, tense and person hug their words, so a hover shows English only over the text itself */
+.verb,.tense,.who{width:fit-content;max-width:100%;margin-left:auto;margin-right:auto}
 .tline{display:block;width:64px;height:17px;margin:2px auto 10px;overflow:visible}
 .tline .b{stroke:var(--edge);stroke-width:1.5;stroke-linecap:round}
 .tline .n{stroke:var(--muted);stroke-width:1.5;stroke-linecap:round}
@@ -62,6 +64,11 @@ body.wide .nav .in,body.wide .mast .in,body.wide main{max-width:1100px}
 .fb.ok{background:var(--okbg);color:var(--ok)}
 .fb.bad{background:var(--badbg);color:var(--bad)}
 #go{margin-top:16px}
+/* Letters with diacritics, for keyboards that can't type them. Each page sets --keys, its column count. */
+.keys{display:grid;grid-template-columns:repeat(var(--keys,9),minmax(0,1fr));gap:4px;margin:10px 0 0}
+.keys button{min-height:38px;padding:0;border:1px solid var(--line);border-radius:5px;background:transparent;font-size:1.15rem;line-height:1;transition:background-color .15s,opacity .15s}
+.keys button:disabled{opacity:.35;cursor:default}
+@media (pointer:coarse){.keys button{min-height:44px}}
 
 /* Results */
 #done{padding-top:14px}
@@ -119,5 +126,6 @@ body.wide .foot{max-width:1060px}
   .chips button:not(.on):hover{background:var(--hover);border-color:var(--muted)}
   .primary:hover{background:var(--fill-hi)}
   .ghost:hover{background:var(--hover)}
+  .keys button:not(:disabled):hover{background:var(--hover);border-color:var(--edge)}
   .link:hover{text-decoration-thickness:2px}
 }

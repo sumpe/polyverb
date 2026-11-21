@@ -67,3 +67,26 @@ ir:["voy vas va vamos vais van","fui fuiste fue fuimos fuisteis fueron","iba iba
 
 // Spanish infinitive where it differs from the Portuguese one.
 const XI={"ter": "tener", "haver": "haber", "pôr": "poner", "fazer": "hacer", "dizer": "decir", "vir": "venir", "trazer": "traer", "ler": "leer", "sair": "salir", "ouvir": "oír"};
+
+// English for each infinitive, shown on hover in the game (not in the tables).
+const GLOSS={
+ser:"to be (permanent)",estar:"to be (temporary, or where)",ter:"to have",haver:"to have (auxiliary); there is",
+"pôr":"to put",ir:"to go",fazer:"to do, to make",dizer:"to say",dar:"to give",ver:"to see",vir:"to come",
+poder:"can, to be able to",querer:"to want",saber:"to know",trazer:"to bring",ler:"to read",
+sair:"to go out, to leave",ouvir:"to hear",pedir:"to ask for",dormir:"to sleep",
+cantar:"to sing",falar:"to speak",andar:"to walk",pensar:"to think",trabalhar:"to work",comprar:"to buy",
+estudar:"to study",chamar:"to call",usar:"to use",esperar:"to wait, to hope",ajudar:"to help",gostar:"to like",
+mostrar:"to show",ganhar:"to win, to earn",mandar:"to send, to order",entrar:"to come in, to enter",olhar:"to look",
+amar:"to love",levar:"to take, to carry",tomar:"to take, to have (a drink)",passar:"to pass, to spend (time)",
+deixar:"to leave, to let",lavar:"to wash",tirar:"to take out, to remove",acabar:"to finish",parar:"to stop",
+terminar:"to end, to finish",preparar:"to prepare",visitar:"to visit",lembrar:"to remember, to remind",
+mudar:"to change, to move",morar:"to live (somewhere)",viajar:"to travel",nadar:"to swim",jantar:"to have dinner",
+comer:"to eat",beber:"to drink",vender:"to sell",correr:"to run",escrever:"to write",aprender:"to learn",
+responder:"to answer",esconder:"to hide",prometer:"to promise",temer:"to fear",varrer:"to sweep",
+entender:"to understand",defender:"to defend",ofender:"to offend",atender:"to attend to, to answer (the phone)",
+dever:"must, to owe",mexer:"to stir, to touch",ceder:"to give way, to yield",
+partir:"to leave, to break",decidir:"to decide",abrir:"to open",assistir:"to watch, to attend",existir:"to exist",
+insistir:"to insist",admitir:"to admit",permitir:"to allow",unir:"to unite",dividir:"to divide",
+discutir:"to discuss, to argue",cumprir:"to fulfil, to keep (a promise)",aplaudir:"to applaud",persistir:"to persist",
+resistir:"to resist",omitir:"to omit",emitir:"to issue, to emit",imprimir:"to print",invadir:"to invade"
+};
