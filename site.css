@@ -69,6 +69,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .fl{flex:none;width:16px;height:11px;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
 .fl.pt{background:linear-gradient(90deg,#2d6a4f 0 40%,#c0392b 40%)}
 .fl.pl{background:linear-gradient(#fff 0 50%,#b8323f 50%)}
+.fl.sv{background:linear-gradient(90deg,transparent 31%,#f2c230 31% 44%,transparent 44%),linear-gradient(transparent 40%,#f2c230 40% 60%,transparent 60%),#2a6496}
 
 /* Footer: a hairline the width of the text column, then the credit */
 .foot{width:calc(100% - 40px);max-width:500px;margin:0 auto;padding:18px 0 32px;border-top:1px solid var(--line);color:var(--muted);font-style:italic;font-size:.85rem;text-align:right}
@@ -80,6 +81,12 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
   [data-en]:not(a,button,label,label *){cursor:help}
 }
 
+/* Phones: three language names don't fit beside the brand with flags, so the flags go */
+@media (max-width:480px){
+  .fl{display:none}
+  .langs{gap:0}
+  .langs a{padding:0 6px;font-size:.9rem}
+}
 @media (max-width:400px){
   .nav .in{padding-left:16px;padding-right:16px}
   .foot{width:calc(100% - 32px)}

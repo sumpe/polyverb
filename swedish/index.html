@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Svensk verbträning 🫎</title>
+<meta name="theme-color" content="#f7f3ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#19110c" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="../trainer.css">
+<style>
+:root{
+  --accent:#24587f;
+  --fill:#24587f;
+  --fill-hi:#1d4a6c;
+  --tint:#dfe8f0;
+  --ring:rgba(36,88,127,.22);
+  --tag:#24587f;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --accent:#8fb8d8;
+    --fill:#2f6a96;
+    --fill-hi:#3878a8;
+    --tint:#1e2d3a;
+    --ring:rgba(143,184,216,.25);
+    --tag:#8fb8d8;
+  }
+}
+:root[data-theme="dark"]{
+  --accent:#8fb8d8;
+  --fill:#2f6a96;
+  --fill-hi:#3878a8;
+  --tint:#1e2d3a;
+  --ring:rgba(143,184,216,.25);
+  --tag:#8fb8d8;
+}
+
+/* Swedish specifics: three answers side by side, one per principal part */
+#start{margin-top:22px}
+.forms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:18px 0 0}
+.form{display:flex;flex-direction:column;align-items:stretch;gap:4px;min-width:0;text-align:center}
+.cap{color:var(--muted);font-style:italic;font-size:.9rem}
+.form input{display:block;width:100%;min-width:0;min-height:52px;padding:8px 4px;border:1px solid var(--edge);border-radius:6px;background:var(--paper);font-size:1.3rem;line-height:1.2;text-align:center;transition:border-color .15s,box-shadow .15s,background-color .15s}
+.form input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--ring)}
+.form input.ok{border-color:var(--ok);background:var(--okbg);box-shadow:none}
+.form input.bad{border-color:var(--bad);background:var(--badbg);box-shadow:none}
+.right{min-height:1.4em;font-weight:600;font-size:1.05rem;overflow-wrap:anywhere}
+.right .k{display:block;color:var(--muted);font-weight:400;font-style:italic;font-size:.82rem}
+.keys{--keys:3;max-width:180px;margin:6px auto 0}
+body.play .mast .in{padding-top:6px}
+#miss thead th{width:33.333%}
+#miss td .yes{display:block}
+#miss td .fine{color:var(--muted)}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Polyverb"><div class="in">
+  <a class="brand" href="../index.html">Polyverb</a>
+  <div class="langs">
+    <a href="../portuguese/index.html" lang="pt-PT" data-en="Portuguese"><span class="fl pt" aria-hidden="true"></span>Português</a>
+    <a href="../polish/index.html" lang="pl" data-en="Polish"><span class="fl pl" aria-hidden="true"></span>Polski</a>
+    <a href="../swedish/index.html" lang="sv" aria-current="page" data-en="Swedish"><span class="fl sv" aria-hidden="true"></span>Svenska</a>
+  </div>
+</div></nav>
+<header class="mast"><div class="in">
+  <h1 data-en="Swedish verb practice">Svensk verbträning&nbsp;🫎</h1>
+  <p class="sub" id="sub" data-en="The principal parts: present, past and supine. Å, ä and ö count.">Verbens tre former: presens, preteritum och supinum. Å, ä och ö räknas.</p>
+</div></header>
+<main>
+  <section id="setup">
+    <span class="lbl" id="l-n" data-en="Number of verbs">Antal verb</span>
+    <div class="seg" id="seg" role="group" aria-labelledby="l-n">
+      <button data-v="10" aria-pressed="false">10</button>
+      <button data-v="20" class="on" aria-pressed="true">20</button>
+      <button data-v="30" aria-pressed="false">30</button>
+    </div>
+    <span class="lbl" id="l-c" data-en="Conjugations">Konjugationer</span>
+    <div class="chips four tight" id="conj" role="group" aria-labelledby="l-c"></div>
+    <p class="hint" data-en="First: talar, talade, talat. Second: köper, köpte, köpt. Third, the short verbs: bor, bodde, bott. Fourth, the strong and irregular verbs: skriver, skrev, skrivit; är, var, varit.">Första: talar, talade, talat. Andra: köper, köpte, köpt. Tredje, kortverben: bor, bodde, bott. Fjärde, de starka och oregelbundna: skriver, skrev, skrivit; är, var, varit.</p>
+    <button class="primary" id="start" data-en="Start">Börja</button>
+  </section>
+
+  <section id="quiz" hidden>
+    <div class="top"><span id="prog"></span><span id="score"></span></div>
+    <div class="bar"><div id="fill"></div></div>
+    <div class="verb" id="verb"></div>
+    <div class="forms">
+      <label class="form"><span class="cap" data-en="present">presens</span><input id="f0" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="right" id="r0"></span></label>
+      <label class="form"><span class="cap" data-en="past">preteritum</span><input id="f1" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="right" id="r1"></span></label>
+      <label class="form"><span class="cap" data-en="supine">supinum</span><input id="f2" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><span class="right" id="r2"></span></label>
+    </div>
+    <div class="keys" id="keys" role="group" aria-label="Å, ä och ö"></div>
+    <div id="fb" class="fb" role="status" hidden></div>
+    <button class="primary" id="go">Kontrollera</button>
+  </section>
+
+  <section id="done" hidden>
+    <div id="res"></div>
+    <div id="pct"></div>
+    <p id="misshead" data-en="To review">Att repetera</p>
+    <table id="miss">
+      <thead><tr><th scope="col" data-en="present">presens</th><th scope="col" data-en="past">preteritum</th><th scope="col" data-en="supine">supinum</th></tr></thead>
+    </table>
+    <button class="primary" id="again" data-en="Play again">Spela igen</button>
+    <button class="ghost" id="change" data-en="Change settings">Ändra inställningar</button>
+  </section>
+</main>
+<footer class="foot">By Peter S</footer>
+
+<script src="../gloss.js"></script>
+<script src="verbs.js"></script>
+<script>
+const SLOT=["presens","preteritum","supinum"],SLOT_EN=["present","past","supine"];
+const GL=["Första","Andra","Tredje","Fjärde"],GL_EN=["First","Second","Third","Fourth"];
+const GN=["första konjugationen","andra konjugationen","tredje konjugationen","fjärde konjugationen"];
+const GN_EN=["1st conjugation","2nd conjugation","3rd conjugation","4th conjugation: strong and irregular"];
+
+const $=id=>document.getElementById(id);
+const norm=s=>s.trim().toLowerCase().normalize("NFC").replace(/\s+/g," ");
+const shuf=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]];}return a;};
+const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;};
+const en=(node,txt)=>{node.dataset.en=txt;return node;};
+const accepts=(form,typed)=>form.split("/").some(x=>norm(x)===norm(typed));
+const VERBS=SV.map(([v,pres,pret,sup,g,gloss])=>({v,f:[pres,pret,sup],g:g-1,gloss}));
+const FI=[$("f0"),$("f1"),$("f2")];
+
+let n=20,groups=[0,1,2,3],q=[],i=0,score=0,miss=[],phase="",cur="setup",lastInput=FI[0];
+
+function seg(id,fn){
+  const bs=document.querySelectorAll("#"+id+" button");
+  bs.forEach(b=>b.onclick=()=>{
+    fn(b.dataset.v);
+    bs.forEach(x=>{x.classList.toggle("on",x===b);x.setAttribute("aria-pressed",String(x===b));});
+  });
+}
+seg("seg",v=>{n=+v;});
+
+// The four conjugations: any combination, at least one
+GL.forEach((l,k)=>{
+  const b=en(el("button",null,l),GL_EN[k]+" conjugation");
+  b.onclick=()=>{const on=groups.includes(k);if(on&&groups.length===1)return;groups=on?groups.filter(x=>x!==k):groups.concat(k).sort();paintG();};
+  $("conj").appendChild(b);
+});
+function paintG(){[...$("conj").children].forEach((b,k)=>{const on=groups.includes(k);b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on));});}
+paintG();
+
+// The letter keys type into whichever answer box was used last, and keep the focus there
+function typeKey(ch){
+  const a=lastInput;if(a.readOnly)return;
+  const s=a.selectionStart??a.value.length,e=a.selectionEnd??s;
+  a.setRangeText(ch,s,e,"end");a.focus();
+}
+"å ä ö".split(" ").forEach(ch=>{
+  const b=el("button",null,ch);b.type="button";
+  b.addEventListener("mousedown",e=>e.preventDefault());
+  b.addEventListener("touchstart",e=>{e.preventDefault();typeKey(ch);},{passive:false});
+  b.onclick=()=>typeKey(ch);
+  $("keys").appendChild(b);
+});
+const keysOn=on=>[...$("keys").children].forEach(b=>{b.disabled=!on;});
+
+function view(){
+  ["setup","quiz","done"].forEach(s=>$(s).hidden=s!==cur);
+  document.body.classList.toggle("play",cur!=="setup");
+  window.scrollTo(0,0);
+}
+function show(id){cur=id;view();}
+
+function start(){
+  const pool=shuf(VERBS.filter(x=>groups.includes(x.g)));
+  q=pool.slice(0,n);i=0;score=0;miss=[];
+  show("quiz");render();
+}
+
+function render(){
+  const c=q[i];phase="ask";
+  en($("prog"),"Question "+(i+1)+" of "+q.length).textContent="Fråga "+(i+1)+" av "+q.length;
+  en($("score"),"Score "+score).textContent="Poäng "+score;
+  $("fill").style.width=(i/q.length*100)+"%";
+  en($("verb"),c.gloss).textContent=c.v;
+  FI.forEach((f,k)=>{f.value="";f.readOnly=false;f.className="";$("r"+k).textContent="";});
+  keysOn(true);
+  $("fb").hidden=true;en($("go"),"Check").textContent="Kontrollera";
+  FI[0].focus();
+}
+
+function go(){
+  if(phase==="ask"){
+    const c=q[i],typed=FI.map(f=>f.value.trim()),ok=typed.map((t,k)=>!!t&&accepts(c.f[k],t)),all=ok.every(Boolean);
+    if(all)score++;else miss.push({c,typed,ok});
+    FI.forEach((f,k)=>{
+      f.readOnly=true;f.className=ok[k]?"ok":"bad";
+      const r=$("r"+k);r.textContent="";
+      if(!ok[k]){
+        r.append(c.f[k].replace("/"," / "));
+        // Typed another of this verb's forms in the wrong box? Say which one it is.
+        const j=c.f.findIndex((x,m)=>m!==k&&typed[k]&&accepts(x,typed[k]));
+        if(j>=0)r.append(en(el("span","k","det är "+SLOT[j]),"that's the "+SLOT_EN[j]));
+      }
+    });
+    keysOn(false);
+    const right=ok.filter(Boolean).length,fb=$("fb");
+    fb.hidden=false;fb.className="fb "+(all?"ok":"bad");fb.textContent="";
+    fb.append(all?en(el("span",null,"Rätt"),"Correct"):en(el("span",null,right+" av 3 rätt"),right+" of 3 correct"));
+    en($("score"),"Score "+score).textContent="Poäng "+score;
+    $("fill").style.width=((i+1)/q.length*100)+"%";
+    const last=i===q.length-1;en($("go"),last?"See your score":"Next").textContent=last?"Se resultatet":"Nästa";
+    phase="review";
+  }else{
+    i++;
+    if(i<q.length)render();else finish();
+  }
+}
+
+function finish(){
+  show("done");
+  $("res").textContent=score+" / "+q.length;
+  const pc=Math.round(score/q.length*100);
+  en($("pct"),pc+"% correct"+(miss.length?"":", no mistakes")).textContent=pc+" % rätt"+(miss.length?"":", inga fel");
+  $("misshead").hidden=$("miss").hidden=!miss.length;
+  const L=$("miss");[...L.tBodies].forEach(b=>b.remove());
+  miss.forEach(m=>{
+    const c=m.c,b=L.createTBody(),h=el("th");
+    h.colSpan=3;h.scope="rowgroup";b.insertRow().append(h);
+    h.append(en(el("span","v",c.v),c.gloss),en(el("span","k",GN[c.g]),GN_EN[c.g]));
+    const r=b.insertRow();
+    c.f.forEach((form,k)=>{
+      const td=r.insertCell();
+      if(m.ok[k]){td.append(el("span","fine",m.typed[k]));return;}
+      const j=c.f.findIndex((x,s)=>s!==k&&m.typed[k]&&accepts(x,m.typed[k]));
+      if(j>=0)td.className="real";
+      td.append(el("span","no",m.typed[k]||"—"),el("span","yes",form.replace("/"," / ")));
+      if(j>=0)td.append(en(el("span","k","det är "+SLOT[j]),"you wrote the "+SLOT_EN[j]));
+    });
+  });
+}
+
+// Enter moves on to the next empty box; once all three are filled it checks them.
+FI.forEach((f,k)=>{
+  f.addEventListener("focus",()=>{lastInput=f;});
+  f.addEventListener("keydown",e=>{
+    if(e.key!=="Enter"||e.isComposing)return;
+    e.preventDefault();if(e.repeat)return;
+    if(phase==="ask"){
+      const next=[...FI.slice(k+1),...FI.slice(0,k)].find(x=>!x.value.trim());
+      if(next){next.focus();return;}
+    }
+    go();
+  });
+});
+$("start").onclick=start;
+$("go").onclick=go;
+$("again").onclick=start;
+$("change").onclick=()=>show("setup");
+view();
+</script>
+</body>
+</html>
