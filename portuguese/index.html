@@ -236,6 +236,8 @@ body.play #go{margin-top:12px}
 /* Portuguese specifics */
 .tense.sj{color:var(--honey-tag)}
 .tg.sj td{border-left-color:var(--honey)}
+/* The subjunctive's mark: wherever "conjuntivo" is written, it's underlined in honey */
+.mood{text-decoration:underline;text-decoration-color:var(--honey);text-decoration-thickness:max(1.5px,.09em);text-underline-offset:.2em;text-decoration-skip-ink:none}
 .switch{position:relative;display:flex;align-items:center;gap:14px;min-height:56px;padding:10px 0;border-top:1px solid var(--line);line-height:1.35;cursor:pointer}
 .switch+.switch{border-bottom:1px solid var(--line)}
 .switch input{position:absolute;left:0;top:50%;width:44px;height:26px;margin:-13px 0 0;opacity:0;cursor:pointer}
@@ -397,6 +399,7 @@ function info(g,c){
   return l.slice(0,2).map(x=>(x.v===c.v?"do ":"de "+x.v+", ")+TS[x.t]+" · "+x.ps.map(p=>PS[p]).join(", ")).join("; ");
 }
 const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;};
+const mood=(node,s)=>{node.textContent="";s.split(/(conjuntivo)/).forEach((x,k)=>{if(x)node.append(k%2?el("span","mood",x):x);});return node;};
 const alts=(node,a)=>a.forEach((x,k)=>{if(k)node.append(" ",el("span","or","ou")," ");node.append(x);});
 const REG=["cantar","comer","abrir"];
 let n=20,q=[],i=0,score=0,miss=[],phase="";
@@ -470,7 +473,7 @@ function render(){
   $("score").textContent="Pontos "+score;
   $("fill").style.width=(i/q.length*100)+"%";
   $("verb").textContent=c.v;
-  $("tense").textContent=T[c.t];
+  mood($("tense"),T[c.t]);
   $("tense").className="tense"+(c.t>5?" sj":"");
   $("who").textContent=P[c.p][0]+" ("+P[c.p][1]+")";
   $("tline").innerHTML=tline(TK[c.t]);
@@ -495,7 +498,7 @@ function go(){
       if(others.length){const k=el("span","k","também ");alts(k,others);fb.append(k);}
     }else{
       const b=el("span","fa");alts(b,c.a);fb.append("Resposta ",b);
-      if(inf)fb.append(el("span","k","«"+a.value.trim()+"» é "+inf));
+      if(inf)fb.append(mood(el("span","k"),"«"+a.value.trim()+"» é "+inf));
     }
     $("score").textContent="Pontos "+score;
     $("fill").style.width=((i+1)/q.length*100)+"%";
@@ -516,9 +519,9 @@ function finish(){
   miss.forEach(m=>{
     const c=m.c,b=L.createTBody(),h=el("th");
     h.colSpan=2;h.scope="rowgroup";b.insertRow().append(h);
-    h.append(el("span","v",c.v),el("span","k",TS[c.t]+" · "+PS[c.p]));
+    h.append(el("span","v",c.v),mood(el("span","k"),TS[c.t]+" · "+PS[c.p]));
     const r=b.insertRow(),w=r.insertCell();w.append(el("span","no",m.g));
-    if(m.inf){w.className="real";w.append(el("span","k","é "+m.inf));}
+    if(m.inf){w.className="real";w.append(mood(el("span","k"),"é "+m.inf));}
     const a=r.insertCell();a.className="yes";alts(a,c.a);
   });
 }
@@ -605,7 +608,7 @@ function buildTable(){
   T.forEach((name,ti)=>{
     const g=tb.insertRow();g.className="tg"+(ti>5?" sj":"");
     const gc=g.insertCell();gc.colSpan=1+vs.length*2;
-    const sp=document.createElement("span");sp.className="tl";sp.textContent=name;gc.appendChild(sp);
+    gc.appendChild(mood(el("span","tl"),name));
     const cols=vs.map(v=>[D[v][ti].split(" "),es(v,ti)]);
     for(let p=0;p<6;p++){
       const r=tb.insertRow();
