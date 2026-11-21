@@ -1,4 +1,4 @@
-// Polyverb, Swedish: the 100 most common verbs and their principal parts.
+// Polyverb, Swedish: the 100 most common verbs, plus seven more short verbs, and their principal parts.
 // Loaded with a plain <script src>, not as a module, so the page still works opened straight from disk.
 //
 // Each entry: [infinitive, presens, preteritum, supinum, conjugation, English].
@@ -105,5 +105,13 @@ const SV=[
 ["be","ber","bad","bett",4,"to ask; to pray"],
 ["bestämma","bestämmer","bestämde","bestämt",2,"to decide"],
 ["nå","når","nådde","nått",3,"to reach"],
-["ske","sker","skedde","skett",3,"to happen"]
+["ske","sker","skedde","skett",3,"to happen"],
+// Beyond the top 100: the next most common short verbs, so the third conjugation has enough to practise.
+["bero","beror","berodde","berott",3,"to depend"],
+["må","mår","mådde","mått",3,"to feel (well or ill)"],
+["bry","bryr","brydde","brytt",3,"(bry sig) to care"],
+["klä","klär","klädde","klätt",3,"to dress"],
+["fly","flyr","flydde","flytt",3,"to flee"],
+["bete","beter","betedde","betett",3,"(bete sig) to behave"],
+["sy","syr","sydde","sytt",3,"to sew"]
 ];
