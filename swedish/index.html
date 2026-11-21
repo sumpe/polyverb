@@ -52,6 +52,12 @@ body.play .mast .in{padding-top:6px}
 #miss thead th{width:33.333%}
 #miss td .yes{display:block}
 #miss td .fine{color:var(--muted)}
+/* Tables: one conjugation at a time, alphabetical; the infinitive leads each row */
+#tbl-view .sub{margin:0 0 18px}
+.count{margin:0 0 10px;color:var(--muted);font-style:italic;font-size:.94rem}
+#tbl thead th{color:var(--muted);font-weight:400;font-style:italic;font-size:.9rem}
+#tbl td:first-child{color:var(--ink);font-style:normal;font-weight:600}
+#tbl td{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -66,6 +72,10 @@ body.play .mast .in{padding-top:6px}
 <header class="mast"><div class="in">
   <h1 data-en="Swedish verb practice">Svensk verbträning&nbsp;🫎</h1>
   <p class="sub" id="sub" data-en="The principal parts: present, past and supine. Å, ä and ö count.">Verbens tre former: presens, preteritum och supinum. Å, ä och ö räknas.</p>
+  <nav class="tabs" aria-label="Avsnitt">
+    <a href="#game" id="tab-game" aria-current="page" data-en="Practice">Träning</a>
+    <a href="#tables" id="tab-tables" data-en="Tables">Tabeller</a>
+  </nav>
 </div></header>
 <main>
   <section id="setup">
@@ -78,6 +88,11 @@ body.play .mast .in{padding-top:6px}
     <span class="lbl" id="l-c" data-en="Conjugations">Konjugationer</span>
     <div class="chips four tight" id="conj" role="group" aria-labelledby="l-c"></div>
     <p class="hint" data-en="First: talar, talade, talat. Second: köper, köpte, köpt. Third, the short verbs: bor, bodde, bott. Fourth, the strong and irregular verbs: skriver, skrev, skrivit; är, var, varit.">Första: talar, talade, talat. Andra: köper, köpte, köpt. Tredje, kortverben: bor, bodde, bott. Fjärde, de starka och oregelbundna: skriver, skrev, skrivit; är, var, varit.</p>
+    <span class="lbl" id="l-u" data-en="Which verbs">Vilka verb</span>
+    <div class="seg" id="which" role="group" aria-labelledby="l-u">
+      <button data-v="common" class="on" aria-pressed="true" id="w-common" data-en="Common verbs"></button>
+      <button data-v="all" aria-pressed="false" id="w-all" data-en="All verbs, the rare ones too"></button>
+    </div>
     <button class="primary" id="start" data-en="Start">Börja</button>
   </section>
 
@@ -105,6 +120,19 @@ body.play .mast .in{padding-top:6px}
     <button class="primary" id="again" data-en="Play again">Spela igen</button>
     <button class="ghost" id="change" data-en="Change settings">Ändra inställningar</button>
   </section>
+
+  <section id="tbl-view" hidden>
+    <p class="sub" data-en="Choose a conjugation. The verbs are in alphabetical order; hover over an infinitive for the English.">Välj en konjugation. Verben står i bokstavsordning.</p>
+    <div class="seg" id="tconj" role="group" aria-label="Konjugation">
+      <button data-v="0" class="on" aria-pressed="true" data-en="First">Första</button>
+      <button data-v="1" aria-pressed="false" data-en="Second">Andra</button>
+      <button data-v="2" aria-pressed="false" data-en="Third">Tredje</button>
+      <button data-v="3" aria-pressed="false" data-en="Fourth">Fjärde</button>
+    </div>
+    <p class="count" id="tcount"></p>
+    <div class="tw"><table id="tbl"></table></div>
+    <a class="link back" href="#game" data-en="Back to the game">Tillbaka till spelet</a>
+  </section>
 </main>
 <footer class="foot">By Peter S</footer>
 
@@ -122,10 +150,11 @@ const shuf=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math
 const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;};
 const en=(node,txt)=>{node.dataset.en=txt;return node;};
 const accepts=(form,typed)=>form.split("/").some(x=>norm(x)===norm(typed));
-const VERBS=SV.map(([v,pres,pret,sup,g,gloss])=>({v,f:[pres,pret,sup],g:g-1,gloss}));
+const mk=common=>([v,pres,pret,sup,g,gloss])=>({v,f:[pres,pret,sup],g:g-1,gloss,common});
+const VERBS=SV.map(mk(true)).concat(SV_MORE.map(mk(false)));
 const FI=[$("f0"),$("f1"),$("f2")];
 
-let n=20,groups=[0,1,2,3],q=[],i=0,score=0,miss=[],phase="",cur="setup",lastInput=FI[0];
+let n=20,groups=[0,1,2,3],which="common",tg=0,q=[],i=0,score=0,miss=[],phase="",cur="setup",lastInput=FI[0];
 
 function seg(id,fn){
   const bs=document.querySelectorAll("#"+id+" button");
@@ -135,6 +164,8 @@ function seg(id,fn){
   });
 }
 seg("seg",v=>{n=+v;});
+seg("which",v=>{which=v;});
+seg("tconj",v=>{tg=+v;buildTable();});
 
 // The four conjugations: any combination, at least one
 GL.forEach((l,k)=>{
@@ -142,7 +173,12 @@ GL.forEach((l,k)=>{
   b.onclick=()=>{const on=groups.includes(k);if(on&&groups.length===1)return;groups=on?groups.filter(x=>x!==k):groups.concat(k).sort();paintG();};
   $("conj").appendChild(b);
 });
-function paintG(){[...$("conj").children].forEach((b,k)=>{const on=groups.includes(k);b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on));});}
+function paintG(){
+  [...$("conj").children].forEach((b,k)=>{const on=groups.includes(k);b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on));});
+  // How many verbs each choice gives, for the conjugations picked
+  const inG=VERBS.filter(x=>groups.includes(x.g)),c=inG.filter(x=>x.common).length;
+  $("w-common").textContent="Vanliga ("+c+")";$("w-all").textContent="Alla ("+inG.length+")";
+}
 paintG();
 
 // The letter keys type into whichever answer box was used last, and keep the focus there
@@ -161,14 +197,18 @@ function typeKey(ch){
 const keysOn=on=>[...$("keys").children].forEach(b=>{b.disabled=!on;});
 
 function view(){
-  ["setup","quiz","done"].forEach(s=>$(s).hidden=s!==cur);
-  document.body.classList.toggle("play",cur!=="setup");
+  const t=location.hash==="#tables";
+  ["setup","quiz","done"].forEach(s=>$(s).hidden=t||s!==cur);
+  $("tbl-view").hidden=!t;$("sub").hidden=t;
+  document.body.classList.toggle("play",!t&&cur!=="setup");
+  [["tab-game",!t],["tab-tables",t]].forEach(([id,on])=>on?$(id).setAttribute("aria-current","page"):$(id).removeAttribute("aria-current"));
+  if(t)buildTable();
   window.scrollTo(0,0);
 }
 function show(id){cur=id;view();}
 
 function start(){
-  const pool=shuf(VERBS.filter(x=>groups.includes(x.g)));
+  const pool=shuf(VERBS.filter(x=>groups.includes(x.g)&&(which==="all"||x.common)));
   q=pool.slice(0,n);i=0;score=0;miss=[];
   show("quiz");render();
 }
@@ -249,6 +289,23 @@ FI.forEach((f,k)=>{
     go();
   });
 });
+// One conjugation, every verb, alphabetical (Swedish order: å, ä, ö after z).
+// Only the infinitive carries English on hover.
+const ORD=["första","andra","tredje","fjärde"],ORD_EN=["first","second","third","fourth"];
+function buildTable(){
+  const vs=VERBS.filter(x=>x.g===tg).sort((a,b)=>a.v.localeCompare(b.v,"sv")),tab=$("tbl");
+  en($("tcount"),vs.length+" verbs in the "+ORD_EN[tg]+" conjugation").textContent=vs.length+" verb i "+ORD[tg]+" konjugationen";
+  tab.textContent="";
+  const h=tab.createTHead().insertRow();
+  [["infinitiv","infinitive"]].concat(SLOT.map((x,k)=>[x,SLOT_EN[k]])).forEach(([sv,e])=>h.appendChild(en(el("th",null,sv),e)));
+  const tb=tab.createTBody();
+  vs.forEach(x=>{
+    const r=tb.insertRow();
+    en(r.insertCell(),x.gloss).textContent=x.v;
+    x.f.forEach(f=>{r.insertCell().textContent=f.replace("/"," / ");});
+  });
+}
+window.addEventListener("hashchange",view);
 $("start").onclick=start;
 $("go").onclick=go;
 $("again").onclick=start;
