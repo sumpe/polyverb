@@ -53,7 +53,7 @@
 .tg.sj td{border-left-color:var(--honey)}
 /* The subjunctive's mark: wherever "conjuntivo" is written, it's underlined in honey */
 .mood{text-decoration:underline;text-decoration-color:var(--honey);text-decoration-thickness:max(1.5px,.09em);text-underline-offset:.2em;text-decoration-skip-ink:none}
-.switch{position:relative;display:flex;align-items:center;gap:14px;min-height:56px;padding:10px 0;border-top:1px solid var(--line);line-height:1.35;cursor:pointer}
+.switch{position:relative;display:flex;align-items:center;gap:14px;min-height:50px;padding:8px 0;border-top:1px solid var(--line);line-height:1.35;cursor:pointer}
 .switch+.switch{border-bottom:1px solid var(--line)}
 .switch input{position:absolute;left:0;top:50%;width:44px;height:26px;margin:-13px 0 0;opacity:0;cursor:pointer}
 .track{position:relative;flex:none;width:44px;height:26px;border-radius:13px;background:var(--edge);transition:background-color .15s}
@@ -61,7 +61,7 @@
 .switch input:checked+.track{background:var(--fill)}
 .switch input:checked+.track::after{transform:translateX(18px)}
 .switch input:focus-visible+.track{outline:2px solid var(--focus);outline-offset:2px}
-#start{margin-top:28px}
+#start{margin-top:22px}
 .gl{flex:0 0 100%;margin-top:8px;color:var(--muted);font-style:italic;font-size:.94rem}
 .gl:first-child{margin-top:0}
 thead tr:first-child th{border-bottom:0;padding-bottom:2px}
@@ -98,7 +98,7 @@ th.es,td.es{background:var(--col-es)}
       <button data-v="30" aria-pressed="false">30</button>
     </div>
     <span class="lbl" id="l-k" data-en="Verbs">Verbos</span>
-    <div class="chips tight" id="kinds" role="group" aria-labelledby="l-k"></div>
+    <div class="chips four tight" id="kinds" role="group" aria-labelledby="l-k"></div>
     <p class="hint" data-en="Regular: many verbs in -ar, -er and -ir. Essential: ser, estar, ter, haver, pôr, ir. Common: fazer, dizer, dar, ver, vir, poder, querer, saber. Supplementary: trazer, ler, sair, ouvir, pedir, dormir.">Regulares: muitos verbos em -ar, -er e -ir. Essenciais: ser, estar, ter, haver, pôr, ir. Frequentes: fazer, dizer, dar, ver, vir, poder, querer, saber. Complementares: trazer, ler, sair, ouvir, pedir, dormir.</p>
     <label class="switch">
       <input type="checkbox" id="vos" checked>
